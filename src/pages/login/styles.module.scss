@@ -1,0 +1,138 @@
+.containerSignIn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.left {
+  background-color: var(--black-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--s24);
+}
+
+.right {
+  padding: var(--s24);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .createAccount {
+    position: absolute;
+    right: var(--s32);
+    top: var(--s32);
+
+    button {
+      background-color: var(--yellow-100);
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      padding: var(--s16) var(--s24);
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+      margin-left: var(--s24);
+      transition: 0.2s ease;
+
+      &:hover {
+        background-color: #ebeb70;
+      }
+    }
+  }
+
+  .rightContent {
+    max-width: 550px;
+
+    h1 {
+      font-size: var(--s32);
+      font-weight: bold;
+      margin-bottom: var(--s8);
+    }
+
+    span {
+      margin-bottom: var(--s64);
+      display: block;
+    }
+
+    .form {
+      div {
+        margin-top: var(--s32);
+      }
+    }
+
+    .btnsWrapper {
+      padding-top: var(--s32);
+
+      button:first-child {
+        background: var(--yellow-main);
+        border: none;
+        padding: 16px 64px;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+        font-weight: bold;
+        font-size: 18px;
+        margin-right: var(--s64);
+        transition: 0.2s ease;
+
+        &:hover {
+          background-color: var(--yellow-hover);
+        }
+      }
+
+      button:last-child {
+        background: none;
+        border: none;
+        font-weight: 600;
+
+        &::after {
+          content: "";
+          display: block;
+          background-color: var(--yellow-main);
+          width: 0%;
+          height: 2px;
+          margin-top: 4px;
+          transition: 0.3s ease;
+        }
+
+        &:hover::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .containerSignIn {
+    grid-template-columns: 1fr;
+  }
+  .left {
+    display: none;
+  }
+}
+
+@media (max-width: 460px) {
+  .createAccount {
+    right: var(--s16) !important;
+  }
+
+  .rightContent {
+    margin-top: var(--s64) !important;
+  }
+
+  .btnsWrapper {
+    button:first-child {
+      width: 100%;
+    }
+    button:last-child {
+      display: block;
+      margin: 32px auto;
+    }
+  }
+}
+
+@media (min-width: 1800px) {
+  .rightContent {
+    width: 600px;
+  }
+}

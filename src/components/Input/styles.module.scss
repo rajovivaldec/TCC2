@@ -1,0 +1,20 @@
+.label {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: var(--s16);
+}
+
+.input {
+  padding: 20px 16px;
+  border: 1px solid var(--black-100);
+  border-radius: 4px;
+  background: none;
+  width: 100%;
+}
+
+.error {
+  color: #f31;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
