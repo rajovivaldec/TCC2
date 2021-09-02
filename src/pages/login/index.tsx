@@ -10,7 +10,7 @@ export default function Login() {
 
   return (
     <>
-      <main className={styles.containerSignIn}>
+      {/* <main className={styles.containerSignIn}>
         <section className={styles.left}>
           <Image
             width="655.14"
@@ -60,6 +60,22 @@ export default function Login() {
             </form>
           </div>
         </section>
+      </main> */}
+      <main className="styles.containerSignIn">
+        <section className={styles.left}>
+          <Image width="655.14"
+          height="523.63"
+          src="/imgs/createIllustration.svg"
+          alt="Cara aleatorio"
+          />
+        </section>
+        <section className={styles.right}>
+          <div className={styles.rightContent}>
+
+            
+          </div>
+        </section>
+        
       </main>
     </>
   );
