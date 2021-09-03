@@ -33,6 +33,7 @@
       background-color: var(--yellow-100);
       font-size: 18px;
       font-weight: bold;
+      border-radius: 4px; // AQUI
       border: none;
       border-radius: 4px;
       padding: var(--s16) var(--s24);
@@ -51,6 +52,7 @@
     max-width: 550px;
 
     h1 {
+      // margin-top: var(--s64); // AQUI
       font-size: var(--s32);
       font-weight: bold;
       margin-bottom: var(--s8);
@@ -60,6 +62,9 @@
       margin-bottom: var(--s64);
       display: block;
     }
+    // .arrow img{
+    //   padding-bottom: var(--s64);
+    // }
 
     .form {
       div {
@@ -72,6 +77,7 @@
 
       button:first-child {
         background: var(--yellow-main);
+        border-radius: 4px; // AQUI
         border: none;
         padding: 16px 64px;
         box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
@@ -89,7 +95,6 @@
         background: none;
         border: none;
         font-weight: 600;
-
         &::after {
           content: "";
           display: block;
@@ -102,6 +107,24 @@
 
         &:hover::after {
           width: 100%;
+        }
+      }
+    }
+    .btnForgetPass { // AQUI
+      padding-top: var(--s8);
+
+      button {
+        background: var(--yellow-main);
+        border: none;
+        border-radius: 4px;
+        padding: 16px;
+        width: 100%;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.2s ease;
+        &:hover {
+          background-color: var(--yellow-hover);
         }
       }
     }
