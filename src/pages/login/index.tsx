@@ -7,10 +7,14 @@ import styles from "./styles.module.scss";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [emailSignUp, setEmailSignUp] = useState("");
+  const [passwordSignUp, setPasswordSignUp] = useState("");
+  
 
   return (
     <>
-      <main className={styles.containerSignIn}>
+      {/* <main className={styles.containerSignIn}>
         <section className={styles.left}>
           <Image
             width="655.14"
@@ -60,12 +64,12 @@ export default function Login() {
             </form>
           </div>
         </section>
-      </main>
-      {/* <main className={styles.containerSignUp}>
+      </main> */}
+      <main className={styles.containerSignUp}>
         <section className={styles.left}>
           <Image
-            width="655.14"
-            height="523.63"
+            width="658.16"
+            height="493.65"
             src="/imgs/createIllustration.svg"
             alt="Cara aleatorio"
           />
@@ -83,8 +87,9 @@ export default function Login() {
                 label="Nome Completo" //perguntar para o joão quanto ao value e setValue
                 type="text"
                 id="name"
-                placeHolder="Insrira seu nome completo"
-                // value ={name}
+                placeholder="Insira seu nome completo"
+                value = {name}
+                setValue = {setName}
                 error={false}
                 required
               />
@@ -94,8 +99,8 @@ export default function Login() {
                   type="text"
                   id="email"
                   placeholder="Insira seu e-mail"
-                  value={email}
-                  setValue={setEmail}
+                  value={emailSignUp}
+                  setValue={setEmailSignUp}
                   error={false}
                   required
                 />
@@ -106,8 +111,8 @@ export default function Login() {
                   type="passowrd"
                   id="password"
                   placeholder="Insira sua senha"
-                  value={password}
-                  setValue={setPassword}
+                  value={passwordSignUp}
+                  setValue={setPasswordSignUp}
                   error={false}
                   required
                 />
@@ -119,7 +124,7 @@ export default function Login() {
             </form>
           </div>
         </section>
-      </main> */}
+      </main>
     </>
   );
 }
