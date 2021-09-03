@@ -7,10 +7,14 @@ import styles from "./styles.module.scss";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [emailSignUp, setEmailSignUp] = useState("");
+  const [passwordSignUp, setPasswordSignUp] = useState("");
+  
 
   return (
     <>
-      <main className={styles.containerSignIn}>
+      {/* <main className={styles.containerSignIn}>
         <section className={styles.left}>
           <Image
             width="655.14"
@@ -56,6 +60,66 @@ export default function Login() {
               <div className={styles.btnsWrapper}>
                 <button>Entrar</button>
                 <button>Esqueceu a senha?</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main> */}
+      <main className={styles.containerSignUp}>
+        <section className={styles.left}>
+          <Image
+            width="658.16"
+            height="493.65"
+            src="/imgs/createIllustration.svg"
+            alt="Cara aleatorio"
+          />
+        </section>
+        <section className={styles.right}>
+          <div className={styles.haveAccount}>
+            <span> Já tem uma conta </span>
+            <button>ENTRAR</button>
+          </div>
+          <div className={styles.rightContent}>
+            <h1>Bem Vindo ao Rajovi-Platform</h1>
+            <span>Crie já sua conta</span>
+            <form className={styles.registerForm}>
+              <Input
+                label="Nome Completo" //perguntar para o joão quanto ao value e setValue
+                type="text"
+                id="name"
+                placeholder="Insira seu nome completo"
+                value = {name}
+                setValue = {setName}
+                error={false}
+                required
+              />
+              <div>
+                <Input
+                  label="E-mail"
+                  type="text"
+                  id="email"
+                  placeholder="Insira seu e-mail"
+                  value={emailSignUp}
+                  setValue={setEmailSignUp}
+                  error={false}
+                  required
+                />
+              </div>
+              <div>
+                <Input
+                  label="Senha"
+                  type="passowrd"
+                  id="password"
+                  placeholder="Insira sua senha"
+                  value={passwordSignUp}
+                  setValue={setPasswordSignUp}
+                  error={false}
+                  required
+                />
+              </div>
+              <div className={styles.registerBtn}>
+                <button>Criar Conta</button>
+                
               </div>
             </form>
           </div>
