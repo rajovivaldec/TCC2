@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div>
-      <h1>Olá Mundoo!</h1>
+      <a href="http://localhost:3000/login">VAI NO LOGIN !!!</a>
     </div>
   );
 }

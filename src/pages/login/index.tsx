@@ -7,10 +7,55 @@ import styles from "./styles.module.scss";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [resetPassword, setResetPassword] = useState("");
 
   return (
     <>
-      <main className={styles.containerSignIn}>
+       <main className={styles.containerSignIn}>
+        <section className={styles.left}>
+          <Image
+            width="612"
+            height="453"
+            src="/imgs/resgatarSenhaIllustration.svg"
+            alt="Pessoa pensativa"
+          />
+        </section>
+
+        <section className={styles.right}>
+          <div className={styles.rightContent}>
+            <Image
+              width="39.06"
+              height="26.05"
+              src="/icons/setaVoltar.svg"
+              alt="Voltar para login"
+            />
+
+            <h1>Esqueceu a senha?</h1>
+            <span>
+              Insira seu e-mail para receber as instruções de como alterar sua
+              senha
+            </span>
+
+            <form className={styles.form}>
+              <Input
+                label="E-mail"
+                type="text"
+                id="email"
+                placeholder="Insira seu e-mail"
+                value={resetPassword}
+                setValue={setResetPassword}
+                error={false}
+                required
+              />
+              <div className={styles.btnForgetPass}>
+                <button>Enviar E-mail</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      {/* <main className={styles.containerSignIn}>
         <section className={styles.left}>
           <Image
             width="655.14"
@@ -22,7 +67,7 @@ export default function Login() {
 
         <section className={styles.right}>
           <div className={styles.createAccount}>
-            <span>Não tem um conta?</span>
+            <span>Não tem uma conta?</span>
             <button>Criar Conta</button>
           </div>
 
@@ -60,7 +105,7 @@ export default function Login() {
             </form>
           </div>
         </section>
-      </main>
+      </main> */}
     </>
   );
 }
