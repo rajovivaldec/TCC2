@@ -14,54 +14,8 @@ export default function Login() {
 
   return (
     <>
-      {/* Recuperar senha */}
-      {/* <section className={styles.containerSignIn}>
-        <section className={styles.left}>
-          <Image
-            width="612"
-            height="453"
-            src="/imgs/resgatarSenhaIllustration.svg"
-            alt="Pessoa pensativa"
-          />
-        </section>
-
-        <section className={styles.right}>
-          <div className={styles.rightContent}>
-            <Image
-              className={styles.arrow}
-              width="39.06"
-              height="26.05"
-              src="/icons/setaVoltar.svg"
-              alt="Voltar para login"
-            />
-
-            <h1>Esqueceu a senha?</h1>
-            <span>
-              Insira seu e-mail para receber as instruções de como alterar sua
-              senha
-            </span>
-
-            <form className={styles.form}>
-              <Input
-                label="E-mail"
-                type="text"
-                id="email"
-                placeholder="Insira seu e-mail"
-                value={resetPassword}
-                setValue={setResetPassword}
-                error={false}
-                required
-              />
-              <div className={styles.btnForgetPass}>
-                <button>Enviar E-mail</button>
-              </div>
-            </form>
-          </div>
-        </section>
-      </section> */}
-{/* Recuperar senha */}
-      {/* Login*/}
-      <section className={styles.containerSignIn}>
+      {/* Login */}
+      <main className={styles.containerSignIn}>
         <section className={styles.left}>
           <Image
             width="655.14"
@@ -111,10 +65,9 @@ export default function Login() {
             </form>
           </div>
         </section>
-      </section>
-      {/* Login*/}
+      </main>
 
-      {/*Registro */}
+      {/* Registro */}
       {/* <section className={styles.containerSignUp}>
         <section className={styles.left}>
           <Image
@@ -124,6 +77,7 @@ export default function Login() {
             alt="Cara aleatorio"
           />
         </section>
+
         <section className={styles.right}>
           <div className={styles.haveAccount}>
             <span> Já tem uma conta </span>
@@ -134,7 +88,7 @@ export default function Login() {
             <span>Crie já sua conta</span>
             <form className={styles.registerForm}>
               <Input
-                label="Nome Completo" //perguntar para o joão quanto ao value e setValue
+                label="Nome Completo"
                 type="text"
                 id="name"
                 placeholder="Insira seu nome completo"
@@ -174,8 +128,53 @@ export default function Login() {
           </div>
         </section>
       </section> */}
-      {/*Registro */}
 
+      {/* Recuperar Senha */}
+      {/* <section className={styles.containerSignIn}>
+        <section className={styles.left}>
+          <Image
+            width="612"
+            height="453"
+            src="/imgs/resgatarSenhaIllustration.svg"
+            alt="Pessoa pensativa"
+          />
+        </section>
+
+        <section className={styles.right}>
+          <div className={styles.rightContent}>
+            <button className={styles.arrow}>
+              <Image
+                width="39.06"
+                height="26.05"
+                src="/icons/setaVoltar.svg"
+                alt="Voltar para login"
+              />
+            </button>
+
+            <h1>Esqueceu a senha?</h1>
+            <span>
+              Insira seu e-mail para receber as instruções de como alterar sua
+              senha
+            </span>
+
+            <form className={styles.form}>
+              <Input
+                label="E-mail"
+                type="text"
+                id="email"
+                placeholder="Insira seu e-mail"
+                value={resetPassword}
+                setValue={setResetPassword}
+                error={false}
+                required
+              />
+              <div className={styles.btnForgetPass}>
+                <button>Enviar E-mail</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </section> */}
     </>
   );
 }
