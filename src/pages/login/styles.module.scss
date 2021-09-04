@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100vh;
-  overflow: hidden;
   grid-column: 1 /-1;
 }
 
@@ -13,9 +12,15 @@
   align-items: center;
   padding: var(--s24);
 }
-
+.containerSignUp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  grid-column: 1 /-1;
+}
 .right {
   padding: var(--s24);
+  margin-top: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,6 +34,7 @@
       background-color: var(--yellow-100);
       font-size: 18px;
       font-weight: bold;
+      border-radius: 4px; // AQUI
       border: none;
       border-radius: 4px;
       padding: var(--s16) var(--s24);
@@ -43,9 +49,10 @@
   }
 
   .rightContent {
-    max-width: 550px;
+    max-width: 500px;
 
     h1 {
+      // margin-top: var(--s64); // AQUI
       font-size: var(--s32);
       font-weight: bold;
       margin-bottom: var(--s8);
@@ -54,6 +61,11 @@
     span {
       margin-bottom: var(--s64);
       display: block;
+    }
+    .arrow {
+      margin-bottom: var(--s64);
+      border: none;
+      background: none;
     }
 
     .form {
@@ -67,6 +79,7 @@
 
       button:first-child {
         background: var(--yellow-main);
+        border-radius: 4px; // AQUI
         border: none;
         padding: 16px 64px;
         box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
@@ -84,7 +97,6 @@
         background: none;
         border: none;
         font-weight: 600;
-
         &::after {
           content: "";
           display: block;
@@ -100,11 +112,75 @@
         }
       }
     }
+    .btnForgetPass {
+      // AQUI
+      padding-top: var(--s8);
+
+      button {
+        background: var(--yellow-main);
+        border: none;
+        border-radius: 4px;
+        padding: 16px;
+        width: 100%;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.2s ease;
+        &:hover {
+          background-color: var(--yellow-hover);
+        }
+      }
+    }
+    .registerForm {
+      div {
+        margin-top: var(--s32);
+      }
+    }
+    .registerBtn {
+      padding-top: var(--s32);
+      button {
+        background: var(--yellow-main);
+        border-radius: 4px;
+        border: none;
+        padding: var(--s16);
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.2s ease;
+        width: 100%;
+
+        &:hover {
+          background-color: var(--yellow-hover);
+        }
+      }
+    }
+  }
+  .haveAccount {
+    position: absolute;
+    // padding-bottom: 5rem;
+    right: var(--s32);
+    top: var(--s32);
+    button {
+      background-color: var(--yellow-100);
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      padding: var(--s16) var(--s24);
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+      margin-left: var(--s24);
+      transition: 0.2s ease;
+
+      &:hover {
+        background-color: #ebeb70;
+      }
+    }
   }
 }
 
 @media (max-width: 960px) {
-  .containerSignIn {
+  .containerSignIn,
+  .containerSignUp {
     grid-template-columns: 1fr;
   }
   .left {
@@ -133,7 +209,7 @@
 }
 
 @media (min-width: 1800px) {
-  .rightContent {
-    width: 600px;
+  .right .rightContent {
+    min-width: 600px;
   }
 }
