@@ -1,0 +1,139 @@
+.menuContainer {
+  width: 280px;
+  background-color: var(--black-100);
+  color: var(--white);
+  min-height: 100vh;
+  height: 100%;
+  padding: var(--s32) var(--s8);
+  position: relative;
+  overflow: hidden;
+  transition: 0.4s ease;
+
+  hr {
+    width: 90%;
+    height: 2px;
+    background-color: #000;
+    border: none;
+    margin: 16px auto;
+    opacity: 0.1;
+  }
+
+  &.mobile {
+    width: 71px;
+
+    .header {
+      span:first-child {
+        display: none;
+      }
+
+      .menuHamburger {
+        margin: 0 auto var(--s32) auto;
+      }
+    }
+
+    hr {
+      display: none;
+    }
+
+    .copy {
+      display: none;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--s8);
+
+  span {
+    font-weight: bold;
+    position: relative;
+    bottom: 3px;
+  }
+
+  .menuHamburger {
+    width: 20px;
+    height: 2px;
+    background-color: var(--white);
+    display: block;
+    border-top: 2px solid var(--white);
+    border: none;
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--white);
+      transition: 0.3s ease;
+    }
+
+    &::before {
+      margin-top: 7px;
+    }
+    &::after {
+      margin-top: 5px;
+    }
+  }
+}
+
+.nav {
+  padding-top: var(--s16);
+
+  ul {
+    display: grid;
+    gap: 4px;
+
+    li {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      gap: 4px;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: var(--s16);
+        width: 100%;
+        position: relative;
+        transition: 0.3s ease;
+
+        &.active,
+        &:hover {
+          background-color: var(--yellow-main);
+          color: var(--black-main);
+          font-weight: bold;
+          border-radius: 4px;
+
+          img {
+            filter: brightness(0);
+          }
+        }
+
+        // &:hover::after {
+        //   content: "";
+        //   display: block;
+        //   width: 2px;
+        //   height: var(--s32);
+        //   background-color: var(--yellow-main);
+        //   position: absolute;
+        //   right: 0px;
+        // }
+      }
+    }
+  }
+}
+
+.copy {
+  position: absolute;
+  bottom: var(--s32);
+  left: var(--s16);
+
+  strong {
+    color: var(--yellow-main);
+  }
+}

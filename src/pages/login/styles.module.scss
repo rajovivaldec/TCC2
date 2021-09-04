@@ -3,6 +3,7 @@
   grid-template-columns: 1fr 1fr;
   height: 100vh;
   overflow: hidden;
+  grid-column: 1 /-1;
 }
 
 .left {
