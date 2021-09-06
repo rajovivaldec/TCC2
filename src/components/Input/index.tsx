@@ -1,13 +1,15 @@
 import styles from "./styles.module.scss";
 
 export const Input = ({
-  label,
-  type,
   id,
+  label,
+  onChange,
   value,
-  setValue,
+  type,
+  onBlur,
+  placeholder,
   error,
-  ...props
+  required,
 }) => {
   return (
     <>
@@ -18,10 +20,12 @@ export const Input = ({
         className={styles.input}
         id={id}
         name={id}
+        onChange={onChange}
+        placeholder={placeholder}
+        onBlur={onBlur}
         type={type}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
-        {...props}
+        required={required}
       />
       {error && <p className={styles.error}>{error}</p>}
     </>

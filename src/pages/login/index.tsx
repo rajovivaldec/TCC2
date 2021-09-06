@@ -1,26 +1,53 @@
-import { useState } from "react";
 import Image from "next/image";
 import { Input } from "../../components/Input";
-import { useVisibleContent } from "../../hook/useVisibleContent";
+import { useForm } from "../../hooks/useForm";
+import { useVisibleContent } from "../../hooks/useVisibleContent";
 
 import styles from "./styles.module.scss";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [emailSignUp, setEmailSignUp] = useState("");
-  const [passwordSignUp, setPasswordSignUp] = useState("");
-  const [resetPassword, setResetPassword] = useState("");
+  const email = useForm("email");
+  const password = useForm("password");
+  const name = useForm();
+  const emailSignUp = useForm("email");
+  const passwordSignUp = useForm("password");
+  const emailResetPassword = useForm("email");
 
   const {
     homeVisible: loginVisible,
     editVisible: forgotPassVisible,
     registerVisible,
-    showHome: showLogin,
+    showHome: showSignIn,
     showEdit: showForgotPass,
-    showRegister,
+    showRegister: showSignUp,
   } = useVisibleContent();
+
+  function handleSubmitSignIn(e) {
+    e.preventDefault();
+    if (email.validate() && password.validate()) {
+      console.log("enviar");
+    } else {
+      console.log("não Enviar");
+    }
+  }
+
+  function handleSubmitSignUp(e) {
+    e.preventDefault();
+    if (emailSignUp.validate() && passwordSignUp.validate()) {
+      console.log("enviar");
+    } else {
+      console.log("não Enviar");
+    }
+  }
+
+  function handleSubmitResetPass(e) {
+    e.preventDefault();
+    if (emailResetPassword.validate()) {
+      console.log("enviar");
+    } else {
+      console.log("não Enviar");
+    }
+  }
 
   return (
     <>
@@ -38,23 +65,21 @@ export default function Login() {
           <section className={styles.right}>
             <div className={styles.createAccount}>
               <span>Não tem um conta?</span>
-              <button onClick={showRegister}>Criar Conta</button>
+              <button onClick={showSignUp}>Criar Conta</button>
             </div>
 
             <div className={`${styles.rightContent} animeLeft`}>
               <h1>Bem Vindo de volta!</h1>
               <span>Faça o Login com suas credenciais</span>
 
-              <form className={styles.form}>
+              <form className={styles.form} onSubmit={handleSubmitSignIn}>
                 <Input
                   label="E-mail"
                   type="text"
                   id="email"
                   placeholder="Insira seu e-mail"
-                  value={email}
-                  setValue={setEmail}
-                  error={false}
                   required
+                  {...email}
                 />
                 <div>
                   <Input
@@ -62,15 +87,13 @@ export default function Login() {
                     type="password"
                     id="password"
                     placeholder="Insira sua senha"
-                    value={password}
-                    setValue={setPassword}
-                    error={false}
                     required
+                    {...password}
                   />
                 </div>
                 <div className={styles.btnsWrapper}>
                   <button>Entrar</button>
-                  <button onClick={showForgotPass}>Esqueceu a senha?</button>
+                  <div onClick={showForgotPass}>Esqueceu a senha?</div>
                 </div>
               </form>
             </div>
@@ -90,21 +113,22 @@ export default function Login() {
           <section className={styles.right}>
             <div className={styles.haveAccount}>
               <span> Já tem uma conta </span>
-              <button onClick={showLogin}>ENTRAR</button>
+              <button onClick={showSignIn}>Entrar</button>
             </div>
             <div className={`${styles.rightContent} animeLeft`}>
               <h1>Bem Vindo ao Rajovi-Platform</h1>
               <span>Crie já sua conta</span>
-              <form className={styles.registerForm}>
+              <form
+                className={styles.registerForm}
+                onSubmit={handleSubmitSignUp}
+              >
                 <Input
                   label="Nome Completo"
                   type="text"
                   id="name"
                   placeholder="Insira seu nome completo"
-                  value={name}
-                  setValue={setName}
-                  error={false}
                   required
+                  {...name}
                 />
                 <div>
                   <Input
@@ -112,26 +136,22 @@ export default function Login() {
                     type="text"
                     id="email"
                     placeholder="Insira seu e-mail"
-                    value={emailSignUp}
-                    setValue={setEmailSignUp}
-                    error={false}
                     required
+                    {...emailSignUp}
                   />
                 </div>
                 <div>
                   <Input
                     label="Senha"
-                    type="passowrd"
+                    type="password"
                     id="password"
                     placeholder="Insira sua senha"
-                    value={passwordSignUp}
-                    setValue={setPasswordSignUp}
-                    error={false}
                     required
+                    {...passwordSignUp}
                   />
                 </div>
                 <div className={styles.registerBtn}>
-                  <button onClick={showRegister}>Criar Conta</button>
+                  <button>Criar Conta</button>
                 </div>
               </form>
             </div>
@@ -150,7 +170,7 @@ export default function Login() {
 
           <section className={styles.right}>
             <div className={`${styles.rightContent} animeLeft`}>
-              <button className={styles.arrow} onClick={showLogin}>
+              <button className={styles.arrow} onClick={showSignIn}>
                 <Image
                   width="39.06"
                   height="26.05"
@@ -165,16 +185,14 @@ export default function Login() {
                 senha
               </span>
 
-              <form className={styles.form}>
+              <form className={styles.form} onSubmit={handleSubmitResetPass}>
                 <Input
                   label="E-mail"
                   type="text"
                   id="email"
                   placeholder="Insira seu e-mail"
-                  value={resetPassword}
-                  setValue={setResetPassword}
-                  error={false}
                   required
+                  {...emailResetPassword}
                 />
 
                 <button className={styles.btnForgetPass}>Enviar E-mail</button>

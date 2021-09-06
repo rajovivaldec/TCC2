@@ -105,7 +105,7 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
             </li>
 
             <li>
-              <ActiveLink href="/sair" activeClassName={styles.active}>
+              <ActiveLink href="/login" activeClassName={styles.active}>
                 <a>
                   <Image
                     src="/icons/sairHeader.svg"
@@ -196,7 +196,7 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
             </li>
 
             <li>
-              <ActiveLink href="/sair" activeClassName={styles.active}>
+              <ActiveLink href="/login" activeClassName={styles.active}>
                 <a>
                   <Image
                     src="/icons/sairHeader.svg"
