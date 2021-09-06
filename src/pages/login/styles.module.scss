@@ -76,6 +76,7 @@
 
     .btnsWrapper {
       padding-top: var(--s32);
+      text-align: center;
 
       button:first-child {
         background: var(--yellow-main);
@@ -93,10 +94,13 @@
         }
       }
 
-      button:last-child {
+      div {
+        display: inline-block;
         background: none;
         border: none;
         font-weight: 600;
+        cursor: pointer;
+
         &::after {
           content: "";
           display: block;
