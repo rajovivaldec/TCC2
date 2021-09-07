@@ -63,6 +63,10 @@ a {
   gap: var(--s16);
 }
 
+.mainWrapper {
+  padding: var(--s32);
+}
+
 // Animações
 .animeLeft {
   opacity: 0;
