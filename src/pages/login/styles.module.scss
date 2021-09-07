@@ -78,9 +78,9 @@
       padding-top: var(--s32);
       text-align: center;
 
-      button:first-child {
+      button {
         background: var(--yellow-main);
-        border-radius: 4px; // AQUI
+        border-radius: 4px;
         border: none;
         padding: 16px 64px;
         box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
@@ -91,6 +91,10 @@
 
         &:hover {
           background-color: var(--yellow-hover);
+        }
+
+        &:disabled {
+          cursor: not-allowed;
         }
       }
 
@@ -132,6 +136,10 @@
       &:hover {
         background-color: var(--yellow-hover);
       }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
     .registerForm {
       div {
@@ -154,6 +162,10 @@
 
         &:hover {
           background-color: var(--yellow-hover);
+        }
+
+        &:disabled {
+          cursor: not-allowed;
         }
       }
     }
@@ -200,12 +212,8 @@
   }
 
   .btnsWrapper {
-    button:first-child {
+    button {
       width: 100%;
-    }
-    button:last-child {
-      display: block;
-      margin: 32px auto;
     }
   }
 }

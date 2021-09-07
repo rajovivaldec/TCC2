@@ -1,17 +1,23 @@
 import Image from "next/image";
+import Router from "next/router";
+import { useState } from "react";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
-
+import { supabase } from "../../lib/initSupabase";
 import styles from "./styles.module.scss";
 
-export default function Login() {
+function Login() {
   const email = useForm("email");
   const password = useForm("password");
   const name = useForm();
   const emailSignUp = useForm("email");
   const passwordSignUp = useForm("password");
   const emailResetPassword = useForm("email");
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const {
     homeVisible: loginVisible,
@@ -22,30 +28,68 @@ export default function Login() {
     showRegister: showSignUp,
   } = useVisibleContent();
 
-  function handleSubmitSignIn(e) {
+  async function handleSubmitSignIn(e) {
     e.preventDefault();
+    setError("");
+    setLoading(true);
+
     if (email.validate() && password.validate()) {
-      console.log("enviar");
+      const { data, error: signInError } = await supabase.auth.signIn({
+        email: email.value,
+        password: password.value,
+      });
+      if (signInError) setError(signInError.message);
+
+      setLoading(false);
+
+      if (data) {
+        Router.push("/");
+      }
     } else {
-      console.log("não Enviar");
+      alert("Necessário preencher os campos Corretamente");
     }
   }
 
-  function handleSubmitSignUp(e) {
+  async function handleSubmitSignUp(e) {
     e.preventDefault();
+    setError("");
+    setLoading(true);
+
     if (emailSignUp.validate() && passwordSignUp.validate()) {
-      console.log("enviar");
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: emailSignUp.value,
+        password: passwordSignUp.value,
+      });
+      if (signUpError) setError(signUpError.message);
+
+      setLoading(false);
+
+      if (data) {
+        setSuccess(true);
+        name.setValue("");
+        emailSignUp.setValue("");
+        passwordSignUp.setValue("");
+      }
     } else {
-      console.log("não Enviar");
+      alert("Necessário preencher os campos Corretamente");
     }
   }
 
-  function handleSubmitResetPass(e) {
+  async function handleSubmitResetPass(e) {
     e.preventDefault();
+    setError("");
+    setLoading(true);
+
     if (emailResetPassword.validate()) {
-      console.log("enviar");
+      const { error } = await supabase.auth.api.resetPasswordForEmail(
+        emailResetPassword.value
+      );
+      if (error) setError(error.message);
+      else setSuccess(true);
+
+      setLoading(false);
     } else {
-      console.log("não Enviar");
+      alert("Necessário preencher o campo Corretamente");
     }
   }
 
@@ -71,6 +115,9 @@ export default function Login() {
             <div className={`${styles.rightContent} animeLeft`}>
               <h1>Bem Vindo de volta!</h1>
               <span>Faça o Login com suas credenciais</span>
+              {error && (
+                <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>
+              )}
 
               <form className={styles.form} onSubmit={handleSubmitSignIn}>
                 <Input
@@ -92,7 +139,11 @@ export default function Login() {
                   />
                 </div>
                 <div className={styles.btnsWrapper}>
-                  <button>Entrar</button>
+                  {loading ? (
+                    <button disabled>Entrando...</button>
+                  ) : (
+                    <button>Entrar</button>
+                  )}
                   <div onClick={showForgotPass}>Esqueceu a senha?</div>
                 </div>
               </form>
@@ -106,7 +157,7 @@ export default function Login() {
               width="658.16"
               height="493.65"
               src="/imgs/createIllustration.svg"
-              alt="Cara aleatorio"
+              alt="Pessoa olhando para um gráfico e estatísticas"
             />
           </section>
 
@@ -118,6 +169,15 @@ export default function Login() {
             <div className={`${styles.rightContent} animeLeft`}>
               <h1>Bem Vindo ao Rajovi-Platform</h1>
               <span>Crie já sua conta</span>
+              {error && (
+                <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>
+              )}
+              {success && (
+                <p style={{ color: "green", marginBottom: "1rem" }}>
+                  Conta criada com Sucesso!
+                </p>
+              )}
+
               <form
                 className={styles.registerForm}
                 onSubmit={handleSubmitSignUp}
@@ -151,7 +211,11 @@ export default function Login() {
                   />
                 </div>
                 <div className={styles.registerBtn}>
-                  <button>Criar Conta</button>
+                  {loading ? (
+                    <button disabled>Criando...</button>
+                  ) : (
+                    <button>Criar Conta</button>
+                  )}
                 </div>
               </form>
             </div>
@@ -184,6 +248,14 @@ export default function Login() {
                 Insira seu e-mail para receber as instruções de como alterar sua
                 senha
               </span>
+              {error && (
+                <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>
+              )}
+              {!error && success && (
+                <p style={{ color: "green", marginBottom: "1rem" }}>
+                  Cheque seu e-mail para resetar a senha
+                </p>
+              )}
 
               <form className={styles.form} onSubmit={handleSubmitResetPass}>
                 <Input
@@ -195,7 +267,15 @@ export default function Login() {
                   {...emailResetPassword}
                 />
 
-                <button className={styles.btnForgetPass}>Enviar E-mail</button>
+                {loading ? (
+                  <button className={styles.btnForgetPass} disabled>
+                    Enviando...
+                  </button>
+                ) : (
+                  <button className={styles.btnForgetPass}>
+                    Enviar E-mail
+                  </button>
+                )}
               </form>
             </div>
           </section>
@@ -204,3 +284,62 @@ export default function Login() {
     </>
   );
 }
+
+function UpdatePassword({ supabase }) {
+  const password = useForm("password");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handlePasswordReset = async (e) => {
+    e.preventDefault();
+    setError("");
+    setMessage("");
+    setLoading(true);
+
+    if (password.validate()) {
+      const { error } = await supabase.auth.update({
+        password: password.value,
+      });
+      if (error) setError(error.message);
+      else setMessage("Sua senha foi redefinada com sucesso!");
+    } else {
+      alert("Necessário preencher o campo Corretamente");
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <>
+      {loading && <p>Carregando...</p>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
+      {message && <div style={{ color: "green" }}>{message}</div>}
+      <h2 style={{ marginBottom: "2rem" }}>Entre com uma nova senha</h2>
+      <form onSubmit={handlePasswordReset}>
+        <label htmlFor="newpassword">Nova Senha</label>
+        <input
+          style={{ marginTop: "0.5rem", padding: ".5rem 1rem" }}
+          placeholder="+6 caracteres"
+          type="password"
+          onChange={(e) => password.setValue(e.target.value)}
+        />
+        <button
+          style={{
+            marginTop: "2rem",
+            backgroundColor: "var(--yellow-main)",
+            border: "none",
+            padding: "1rem",
+            fontWeight: "bold",
+            borderRadius: "4px",
+          }}
+        >
+          Mudar Senha
+        </button>
+      </form>
+    </>
+  );
+}
+
+Login.UpdatePassword = UpdatePassword;
+export default Login;

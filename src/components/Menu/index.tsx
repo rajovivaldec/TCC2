@@ -1,11 +1,17 @@
-import { useState } from "react";
 import Image from "next/image";
+import Router from "next/router";
 import { ActiveLink } from "../ActiveLink";
 import styles from "./styles.module.scss";
+import { supabase } from "../../lib/initSupabase";
 
 export const Menu = ({ toggleMenu, setToggleMenu }) => {
   function handleToggleMenu() {
     setToggleMenu(!toggleMenu);
+  }
+
+  function handleLogout() {
+    supabase.auth.signOut();
+    Router.push("/login");
   }
 
   return (
@@ -105,17 +111,15 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
             </li>
 
             <li>
-              <ActiveLink href="/login" activeClassName={styles.active}>
-                <a>
-                  <Image
-                    src="/icons/sairHeader.svg"
-                    width="24"
-                    height="24"
-                    alt="Sair"
-                  />
-                  Sair
-                </a>
-              </ActiveLink>
+              <button onClick={handleLogout}>
+                <Image
+                  src="/icons/sairHeader.svg"
+                  width="24"
+                  height="24"
+                  alt="Sair"
+                />
+                Sair
+              </button>
             </li>
           </ul>
         </nav>
@@ -196,16 +200,14 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
             </li>
 
             <li>
-              <ActiveLink href="/login" activeClassName={styles.active}>
-                <a>
-                  <Image
-                    src="/icons/sairHeader.svg"
-                    width="24"
-                    height="24"
-                    alt="Sair"
-                  />
-                </a>
-              </ActiveLink>
+              <button onClick={handleLogout}>
+                <Image
+                  src="/icons/sairHeader.svg"
+                  width="24"
+                  height="24"
+                  alt="Sair"
+                />
+              </button>
             </li>
           </ul>
         </nav>

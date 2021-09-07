@@ -93,7 +93,8 @@
 
       gap: 4px;
 
-      a {
+      a,
+      button {
         display: flex;
         align-items: center;
         gap: 12px;
@@ -101,6 +102,9 @@
         width: 100%;
         position: relative;
         transition: 0.3s ease;
+        background: transparent;
+        border: none;
+        color: var(--white);
 
         &.active,
         &:hover {
@@ -113,16 +117,6 @@
             filter: brightness(0);
           }
         }
-
-        // &:hover::after {
-        //   content: "";
-        //   display: block;
-        //   width: 2px;
-        //   height: var(--s32);
-        //   background-color: var(--yellow-main);
-        //   position: absolute;
-        //   right: 0px;
-        // }
       }
     }
   }
