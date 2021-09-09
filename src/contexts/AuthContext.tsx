@@ -18,11 +18,8 @@ export const AuthContextProvider = (props) => {
 
   useEffect(() => {
     const session = supabaseClient.auth.session();
-
-    if (session) {
-      setSession(session);
-      setUser(session?.user ?? null);
-    }
+    setSession(session);
+    setUser(session?.user ?? null);
 
     const { data: authListener } = supabaseClient.auth.onAuthStateChange(
       async (event, session) => {
@@ -43,23 +40,6 @@ export const AuthContextProvider = (props) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-  //   const session = supabaseClient.auth.session();
-  //   setSession(session);
-  //   setUser(session?.user ?? null);
-  //   const { data: authListener } = supabaseClient.auth.onAuthStateChange(
-  //     async (event, session) => {
-  //       setSession(session);
-  //       setUser(session?.user ?? null);
-  //     }
-  //   );
-
-  //   return () => {
-  //     authListener.unsubscribe();
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const value = {
     session,

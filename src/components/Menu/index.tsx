@@ -3,8 +3,11 @@ import Router from "next/router";
 import { ActiveLink } from "../ActiveLink";
 import styles from "./styles.module.scss";
 import { supabase } from "../../lib/initSupabase";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Menu = ({ toggleMenu, setToggleMenu }) => {
+  const { user } = useAuth();
+
   function handleToggleMenu() {
     setToggleMenu(!toggleMenu);
   }
@@ -13,6 +16,8 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
     supabase.auth.signOut();
     Router.push("/login");
   }
+
+  if (!user) return null;
 
   return (
     <div
