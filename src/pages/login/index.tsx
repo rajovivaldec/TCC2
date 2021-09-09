@@ -7,7 +7,7 @@ import { useVisibleContent } from "../../hooks/useVisibleContent";
 import { supabase } from "../../lib/initSupabase";
 import styles from "./styles.module.scss";
 
-function Login() {
+export default function Login() {
   const email = useForm("email");
   const password = useForm("password");
   const name = useForm();
@@ -284,62 +284,3 @@ function Login() {
     </>
   );
 }
-
-function UpdatePassword({ supabase }) {
-  const password = useForm("password");
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handlePasswordReset = async (e) => {
-    e.preventDefault();
-    setError("");
-    setMessage("");
-    setLoading(true);
-
-    if (password.validate()) {
-      const { error } = await supabase.auth.update({
-        password: password.value,
-      });
-      if (error) setError(error.message);
-      else setMessage("Sua senha foi redefinada com sucesso!");
-    } else {
-      alert("Necessário preencher o campo Corretamente");
-    }
-
-    setLoading(false);
-  };
-
-  return (
-    <>
-      {loading && <p>Carregando...</p>}
-      {error && <div style={{ color: "red" }}>{error}</div>}
-      {message && <div style={{ color: "green" }}>{message}</div>}
-      <h2 style={{ marginBottom: "2rem" }}>Entre com uma nova senha</h2>
-      <form onSubmit={handlePasswordReset}>
-        <label htmlFor="newpassword">Nova Senha</label>
-        <input
-          style={{ marginTop: "0.5rem", padding: ".5rem 1rem" }}
-          placeholder="+6 caracteres"
-          type="password"
-          onChange={(e) => password.setValue(e.target.value)}
-        />
-        <button
-          style={{
-            marginTop: "2rem",
-            backgroundColor: "var(--yellow-main)",
-            border: "none",
-            padding: "1rem",
-            fontWeight: "bold",
-            borderRadius: "4px",
-          }}
-        >
-          Mudar Senha
-        </button>
-      </form>
-    </>
-  );
-}
-
-Login.UpdatePassword = UpdatePassword;
-export default Login;
