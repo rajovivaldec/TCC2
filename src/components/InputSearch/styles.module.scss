@@ -1,0 +1,39 @@
+.container {
+  input {
+    width: 300px;
+    padding: var(--s16);
+    background-color: var(--gray-200);
+    border: none;
+    border-radius: 4px 0 0 4px;
+  }
+
+  button {
+    background-color: var(--yellow-main);
+    border: none;
+    height: 50.67px;
+    padding: 0 var(--s16);
+    border-radius: 0 4px 4px 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 5px;
+
+  }
+}
+
+@media (max-width: 750px) {
+  .container {
+    input {
+      width: 200px;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .container {
+    button {
+      display: none;
+    }
+  }
+}
