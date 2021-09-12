@@ -1,12 +1,16 @@
+import Image from "next/image";
 import { BgWhite } from "../../components/BgWhite";
 import { Button } from "../../components/Button";
 import { InputSearch } from "../../components/InputSearch";
 import { Table } from "../../components/Table";
+import { useVisibleContent } from "../../hooks/useVisibleContent";
 import styles from "./styles.module.scss";
 
 export default function Alunos() {
-  const tableHead = ["Nome", "E-mail", "Celular", "Gênero", "Idade", "Plano"];
+  const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
+    useVisibleContent();
 
+  const tableHead = ["Nome", "E-mail", "Celular", "Gênero", "Idade", "Plano"];
   const tableBody = [
     {
       nome: "Rafael",
@@ -43,21 +47,42 @@ export default function Alunos() {
   ];
 
   return (
-    <section className={styles.container}>
-      <h1>Alunos</h1>
-      <BgWhite>
-        <header>
-          <Button>Cadastrar Novo Aluno</Button>
-          <InputSearch
-            onSubmit={() => console.log("test")}
-            placeHolder="Buscar Alunos.."
-          />
-        </header>
+    <>
+      {homeVisible ? (
+        <section className={styles.container}>
+          <h1>Alunos</h1>
+          <BgWhite>
+            <header>
+              <Button onClick={showRegister}>Cadastrar Novo Aluno</Button>
+              <InputSearch
+                onSubmit={() => console.log("test")}
+                placeHolder="Buscar Alunos.."
+              />
+            </header>
 
-        <hr />
+            <hr />
 
-        <Table tHead={tableHead} tBody={tableBody} />
-      </BgWhite>
-    </section>
+            <Table tHead={tableHead} tBody={tableBody} />
+          </BgWhite>
+        </section>
+      ) : registerVisible ? (
+        <section className={styles.container}>
+          <h1>Cadastrar Alunos</h1>
+          <BgWhite>
+            <button onClick={showHome} className="btnBack">
+              <Image
+                width="40"
+                height="26"
+                src="/icons/setaVoltar.svg"
+                alt="voltar"
+              />
+            </button>
+
+            <hr />
+            <h2>Conteúdo do registro de alunos</h2>
+          </BgWhite>
+        </section>
+      ) : null}
+    </>
   );
 }
