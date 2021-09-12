@@ -53,18 +53,19 @@ a {
 
 .mainContainer {
   display: grid;
-  grid-template-columns: 280px repeat(6, 1fr);
+  grid-template-columns: 280px 1fr;
   gap: var(--s16);
 }
 
 .mainContainerMobile {
   display: grid;
-  grid-template-columns: 71px repeat(6, 1fr);
+  grid-template-columns: 71px 1fr;
   gap: var(--s16);
 }
 
 .mainWrapper {
   padding: var(--s32);
+  grid-column: 2/-1;
 }
 
 // Animações
