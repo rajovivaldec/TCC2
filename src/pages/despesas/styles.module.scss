@@ -1,0 +1,16 @@
+.container {
+    h1 {
+      font-size: var(--s32);
+      margin-bottom: var(--s32);
+    }
+  }
+
+  .registerWrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s32);
+  }
+
+  .btnRegister {
+      margin-top: var(--s64);
+  }
