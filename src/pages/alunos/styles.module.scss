@@ -4,3 +4,13 @@
     margin-bottom: var(--s32);
   }
 }
+
+.aulasWrapp {
+  margin-top: var(--s16);
+  display: flex;
+  flex-wrap: wrap;
+  label {
+    margin-right: var(--s24);
+    margin-bottom: var(--s16);
+  }
+}

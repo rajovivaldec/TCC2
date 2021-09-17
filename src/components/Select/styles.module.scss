@@ -1,0 +1,23 @@
+.label {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: var(--s16);
+}
+
+.select {
+  padding: 20px 16px;
+  border: 1px solid var(--black-100);
+  border-radius: 4px;
+  background: none;
+  width: 100%;
+  transition: 0.2s ease;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    background: #fff;
+    border-color: black;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+}
