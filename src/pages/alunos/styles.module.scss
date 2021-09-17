@@ -15,6 +15,16 @@
   margin-top: var(--s64);
 }
 
+.aulasWrapp {
+  margin-top: var(--s16);
+  display: flex;
+  flex-wrap: wrap;
+  label {
+    margin-right: var(--s24);
+    margin-bottom: var(--s16);
+  }
+}
+
 @media (max-width:1100px) {
   .registerWrapper {
     grid-template-columns: 1fr 1fr;

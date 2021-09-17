@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="90" height="67.5" viewBox="0 0 90 67.5">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0"/>
+      <stop offset="1" stop-opacity="0.251"/>
+    </linearGradient>
+  </defs>
+  <path id="alunosDash" d="M82.5,28.275,75,32.1V59.25C71.224,66.9,53.978,70.5,43.125,70.5c-11.906,0-27.709-3.728-31.875-11.25V30.015L0,22.905,45,3,86.25,26.366V59.25L90,70.5H78.75L82.5,59.25ZM15,32.381V58.155c3.593,4.8,15.814,8.6,28.125,8.6,10.853,0,24.709-3.6,28.125-8.509V34.009L41.539,49.155,15,32.381ZM7.946,23.49,41.737,44.842l36.6-18.653-33.54-19L7.946,23.49Z" transform="translate(0 -3)" fill-rule="evenodd" opacity="0.5" fill="url(#linear-gradient)"/>
+</svg>
