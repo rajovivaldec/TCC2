@@ -13,7 +13,6 @@ import { useForm } from "../../hooks/useForm";
 
 export default function Alunos() {
   const nome = useForm();
-  const plano = useForm();
   const email = useForm("email");
   const genero = useForm();
   const celular = useForm("celular");
@@ -26,14 +25,14 @@ export default function Alunos() {
     useVisibleContent();
 
   const [selectPlans, setSelectPlans] = useState("");
-  const planos = [
+  const plans = [
     {
       id: 1,
       nome: "Semanal",
     },
     {
       id: 2,
-      nome: "Mênsal",
+      nome: "Mensal",
     },
     {
       id: 3,
@@ -41,8 +40,8 @@ export default function Alunos() {
     },
   ];
 
-  const [aulas, setAulas] = useState([]);
-  const aulasDisponiveis = [
+  const [classes, setClasses] = useState([]);
+  const availableClasses = [
     "Matemática1",
     "Português1",
     "História1",
@@ -136,13 +135,13 @@ export default function Alunos() {
                 />
               </div>
               <div>
-                <Input
+                <Select
                   label="Plano"
-                  type="text"
+                  value={selectPlans}
+                  setValue={setSelectPlans}
+                  options={plans}
+                  defaultValue="Selecione um plano"
                   id="plano"
-                  placeholder="Selecione um plano"
-                  required
-                  {...plano}
                 />
               </div>
               <div>
@@ -205,16 +204,14 @@ export default function Alunos() {
                   {...cpf}
                 />
               </div>
-              <div>
-                <Input
-                  label="Aula"
-                  type="text"
-                  id="aula"
-                  placeholder="Selecione uma aula"
-                  required
-                  {...aula}
-                />
-              </div>
+            </div>
+            <label className={styles.aulas}>Aulas</label>
+            <div className={styles.aulasWrapp}>
+              <Checkbox
+                itemsCheck={availableClasses}
+                value={classes}
+                setValue={setClasses}
+              />
             </div>
             <div className={styles.btnRegister}>
               <Button onClick={() => console.log("aluno")}>Cadastrar</Button>
