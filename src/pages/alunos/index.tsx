@@ -22,7 +22,7 @@ export default function Alunos() {
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
 
-  const tableHead = ["Nome", "E-mail", "Celular", "Gênero", "Idade", "Plano"];
+  const tableHead = ["Nome", "Email", "Celular", "Gênero", "Idade", "Plano"];
   const tableBody = [
     {
       nome: "Rafael",
