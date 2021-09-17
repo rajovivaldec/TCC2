@@ -8,20 +8,31 @@ import { Select } from "../../components/Select";
 import { Table } from "../../components/Table";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
 import styles from "./styles.module.scss";
+import { Input } from "../../components/Input";
+import { useForm } from "../../hooks/useForm";
 
 export default function Alunos() {
+  const nome = useForm();
+  const email = useForm("email");
+  const genero = useForm();
+  const celular = useForm("celular");
+  const idade = useForm();
+  const endereco = useForm();
+  const cpf = useForm("cpf");
+  const aula = useForm();
+
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
 
   const [selectPlans, setSelectPlans] = useState("");
-  const planos = [
+  const plans = [
     {
       id: 1,
       nome: "Semanal",
     },
     {
       id: 2,
-      nome: "Mênsal",
+      nome: "Mensal",
     },
     {
       id: 3,
@@ -29,8 +40,8 @@ export default function Alunos() {
     },
   ];
 
-  const [aulas, setAulas] = useState([]);
-  const aulasDisponiveis = [
+  const [classes, setClasses] = useState([]);
+  const availableClasses = [
     "Matemática1",
     "Português1",
     "História1",
@@ -112,23 +123,98 @@ export default function Alunos() {
 
             <hr />
 
-            <Select
-              id="generos"
-              label="Gênero"
-              options={planos}
-              value={selectPlans}
-              setValue={setSelectPlans}
-              defaultValue="Selecione um Gênero"
-            />
-            <br />
-            <br />
-            <h3>Aulas</h3>
+            <div className={styles.registerWrapper}>
+              <div>
+                <Input
+                  label="Nome"
+                  type="text"
+                  id="nome"
+                  placeholder="Insira seu nome completo"
+                  required
+                  {...nome}
+                />
+              </div>
+              <div>
+                <Select
+                  label="Plano"
+                  value={selectPlans}
+                  setValue={setSelectPlans}
+                  options={plans}
+                  defaultValue="Selecione um plano"
+                  id="plano"
+                />
+              </div>
+              <div>
+                <Input
+                  label="E-mail"
+                  type="email"
+                  id="email"
+                  placeholder="Insira seu e-mail"
+                  required
+                  {...email}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Gênero"
+                  type="text"
+                  id="genero"
+                  placeholder="Selecione um gênero"
+                  required
+                  {...genero}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Celular"
+                  type="text"
+                  id="celular"
+                  placeholder="Insira seu celular"
+                  required
+                  {...celular}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Idade"
+                  type="number"
+                  id="idade"
+                  placeholder="Insira sua idade"
+                  required
+                  {...idade}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Endereço"
+                  type="text"
+                  id="endereco"
+                  placeholder="Insira seu endereço"
+                  required
+                  {...endereco}
+                />
+              </div>
+              <div>
+                <Input
+                  label="CPF"
+                  type="number"
+                  id="cpf"
+                  placeholder="Insira seu CPF"
+                  required
+                  {...cpf}
+                />
+              </div>
+            </div>
+            <label className={styles.aulas}>Aulas</label>
             <div className={styles.aulasWrapp}>
               <Checkbox
-                itemsCheck={aulasDisponiveis}
-                value={aulas}
-                setValue={setAulas}
+                itemsCheck={availableClasses}
+                value={classes}
+                setValue={setClasses}
               />
+            </div>
+            <div className={styles.btnRegister}>
+              <Button onClick={() => console.log("aluno")}>Cadastrar</Button>
             </div>
           </BgWhite>
         </section>

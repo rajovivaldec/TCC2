@@ -5,12 +5,42 @@
   }
 }
 
+.registerWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--s32);
+}
+
+.btnRegister {
+  margin-top: var(--s64);
+}
+
 .aulasWrapp {
   margin-top: var(--s16);
   display: flex;
   flex-wrap: wrap;
+
   label {
     margin-right: var(--s24);
     margin-bottom: var(--s16);
+  }
+}
+
+.aulas {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: var(--s32);
+}
+
+@media (max-width:1100px) {
+  .registerWrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width:750px) {
+  .registerWrapper {
+    grid-template-columns: 1fr;
   }
 }
