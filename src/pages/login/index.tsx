@@ -46,7 +46,7 @@ export default function Login() {
         Router.push("/");
       }
     } else {
-      alert("Necessário preencher os campos Corretamente");
+      alert("Necessário preencher os campos corretamente");
     }
   }
 
@@ -71,7 +71,7 @@ export default function Login() {
         passwordSignUp.setValue("");
       }
     } else {
-      alert("Necessário preencher os campos Corretamente");
+      alert("Necessário preencher os campos corretamente");
     }
   }
 
@@ -89,7 +89,7 @@ export default function Login() {
 
       setLoading(false);
     } else {
-      alert("Necessário preencher o campo Corretamente");
+      alert("Necessário preencher o campo corretamente");
     }
   }
 

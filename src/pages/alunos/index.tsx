@@ -5,8 +5,20 @@ import { InputSearch } from "../../components/InputSearch";
 import { Table } from "../../components/Table";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
 import styles from "./styles.module.scss";
+import { Input } from "../../components/Input";
+import { useForm } from "../../hooks/useForm";
 
 export default function Alunos() {
+  const nome = useForm();
+  const plano = useForm();
+  const email = useForm("email");
+  const genero = useForm();
+  const celular = useForm("celular");
+  const idade = useForm();
+  const endereco = useForm();
+  const cpf = useForm("cpf");
+  const aula = useForm();
+
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
 
@@ -79,7 +91,102 @@ export default function Alunos() {
             </button>
 
             <hr />
-            <h2>Conteúdo do registro de alunos</h2>
+
+            <div className={styles.registerWrapper}>
+              <div>
+                <Input
+                  label="Nome"
+                  type="text"
+                  id="nome"
+                  placeholder="Insira seu nome completo"
+                  required
+                  {...nome}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Plano"
+                  type="text"
+                  id="plano"
+                  placeholder="Selecione um plano"
+                  required
+                  {...plano}
+                />
+              </div>
+              <div>
+                <Input
+                  label="E-mail"
+                  type="email"
+                  id="email"
+                  placeholder="Insira seu e-mail"
+                  required
+                  {...email}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Gênero"
+                  type="text"
+                  id="genero"
+                  placeholder="Selecione um gênero"
+                  required
+                  {...genero}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Celular"
+                  type="text"
+                  id="celular"
+                  placeholder="Insira seu celular"
+                  required
+                  {...celular}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Idade"
+                  type="number"
+                  id="idade"
+                  placeholder="Insira sua idade"
+                  required
+                  {...idade}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Endereço"
+                  type="text"
+                  id="endereco"
+                  placeholder="Insira seu endereço"
+                  required
+                  {...endereco}
+                />
+              </div>
+              <div>
+                <Input
+                  label="CPF"
+                  type="number"
+                  id="cpf"
+                  placeholder="Insira seu CPF"
+                  required
+                  {...cpf}
+                />
+              </div>
+              <div>
+                <Input
+                  label="Aula"
+                  type="text"
+                  id="aula"
+                  placeholder="Selecione uma aula"
+                  required
+                  {...aula}
+                />
+              </div>
+            </div>
+            <div className={styles.btnRegister}>
+              <Button onClick={() => console.log("aluno")}>Cadastrar</Button>
+            </div>
           </BgWhite>
         </section>
       ) : null}

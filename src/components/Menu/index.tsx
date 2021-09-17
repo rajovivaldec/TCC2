@@ -24,7 +24,7 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
       className={`${styles.menuContainer} ${toggleMenu ? styles.mobile : ""}`}
     >
       <div className={styles.header}>
-        <span>Olá João Fernando</span>
+        <span>Olá John Doe</span>
         <button
           className={styles.menuHamburger}
           onClick={handleToggleMenu}
@@ -219,7 +219,7 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
       )}
 
       <p className={styles.copy}>
-        Feito por: <strong>Rajovi</strong>
+        Feito por: <strong>RaJoVi</strong>
       </p>
     </div>
   );
