@@ -1,7 +1,10 @@
 import Image from "next/image";
+import { useState } from "react";
 import { BgWhite } from "../../components/BgWhite";
 import { Button } from "../../components/Button";
+import Checkbox from "../../components/Checkbox";
 import { InputSearch } from "../../components/InputSearch";
+import { Select } from "../../components/Select";
 import { Table } from "../../components/Table";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
 import styles from "./styles.module.scss";
@@ -9,6 +12,35 @@ import styles from "./styles.module.scss";
 export default function Alunos() {
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
+
+  const [selectPlans, setSelectPlans] = useState("");
+  const planos = [
+    {
+      id: 1,
+      nome: "Semanal",
+    },
+    {
+      id: 2,
+      nome: "Mênsal",
+    },
+    {
+      id: 3,
+      nome: "Anual",
+    },
+  ];
+
+  const [aulas, setAulas] = useState([]);
+  const aulasDisponiveis = [
+    "Matemática1",
+    "Português1",
+    "História1",
+    "Matemática2",
+    "Português2",
+    "História2",
+    "Matemática3",
+    "Português3",
+    "História3",
+  ];
 
   const tableHead = ["Nome", "Email", "Celular", "Gênero", "Idade", "Plano"];
   const tableBody = [
@@ -79,7 +111,25 @@ export default function Alunos() {
             </button>
 
             <hr />
-            <h2>Conteúdo do registro de alunos</h2>
+
+            <Select
+              id="generos"
+              label="Gênero"
+              options={planos}
+              value={selectPlans}
+              setValue={setSelectPlans}
+              defaultValue="Selecione um Gênero"
+            />
+            <br />
+            <br />
+            <h3>Aulas</h3>
+            <div className={styles.aulasWrapp}>
+              <Checkbox
+                itemsCheck={aulasDisponiveis}
+                value={aulas}
+                setValue={setAulas}
+              />
+            </div>
           </BgWhite>
         </section>
       ) : null}
