@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
+import { Line, Doughnut } from "react-chartjs-2";
 import { supabase } from "../lib/initSupabase";
 import { useAuth } from "../contexts/AuthContext";
 import { ResetPassword } from "../components/ResetPassword";
-import styles from "../styles/home.module.scss";
 import { BgWhite } from "../components/BgWhite";
+import { useChart } from "../hooks/useChart";
+import styles from "../styles/home.module.scss";
 
 export default function Dashboard() {
   const [showResetPass, setShowResetPass] = useState(false);
   const [messageRedirect, setMessageRedirect] = useState(false);
   const { user } = useAuth();
+  const { dataLine, optionsLine, dataDoughnut, optionsDoughnut } = useChart();
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
@@ -129,10 +132,21 @@ export default function Dashboard() {
               <BgWhite>
                 <h2>Receita/mês</h2>
                 <hr />
+
+                <div className={styles.lineChart}>
+                  <Line data={dataLine} options={optionsLine} />
+                </div>
               </BgWhite>
               <BgWhite>
                 <h2>Gênero dos Alunos</h2>
                 <hr />
+
+                <div className={styles.doughnutChart}>
+                  <Doughnut
+                    data={dataDoughnut}
+                    options={optionsDoughnut}
+                  />
+                </div>
               </BgWhite>
             </div>
 
