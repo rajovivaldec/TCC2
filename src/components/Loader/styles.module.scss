@@ -1,0 +1,14 @@
+.loader {
+  animation: is-rotating 1s linear infinite;
+  border: 5px solid var(--black-main);
+  border-top-color: var(--yellow-main);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
+  }
+}

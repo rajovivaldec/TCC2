@@ -1,14 +1,13 @@
 import { BgWhite } from "../../components/BgWhite";
-import { useVisibleContent } from "../../hooks/useVisibleContent";
 import { Button } from "../../components/Button";
 import styles from "./styles.module.scss";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
 
 export default function MinhaConta() {
-  const nome = useForm();
+  const name = useForm();
   const email = useForm("email");
-  const senha = useForm("password");
+  const password = useForm("password");
 
   return (
     <>
@@ -23,7 +22,7 @@ export default function MinhaConta() {
                 id="nome"
                 placeholder="Insira seu nome completo"
                 required
-                {...nome}
+                {...name}
               />
             </div>
             <div>
@@ -43,7 +42,7 @@ export default function MinhaConta() {
                 id="senha"
                 placeholder="Insira sua senha"
                 required
-                {...senha}
+                {...password}
               />
             </div>
           </div>
