@@ -1,0 +1,52 @@
+.container {
+  h1 {
+    font-size: var(--s32);
+    margin-bottom: var(--s32);
+  }
+}
+
+.nameClasses {
+  grid-column: 1/-1;
+  margin-bottom: var(--s16);
+}
+
+.labelAddClasses {
+  grid-column: 1/-1;
+  font-size: var(--s24);
+  font-weight: bold;
+}
+
+.registerWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--s32);
+}
+
+.btnRegister {
+  margin-top: var(--s64);
+}
+
+.btnAdd {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: var(--yellow-main);
+  background-color: var(--black-main);
+  border: none;
+  font-size: var(--s32);
+  font-weight: bold;
+  grid-column: 1/-1;
+  margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .registerWrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 750px) {
+  .registerWrapper {
+    grid-template-columns: 1fr;
+  }
+}

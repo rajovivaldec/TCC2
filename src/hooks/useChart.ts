@@ -49,11 +49,11 @@ export const useChart = () => {
   };
 
   const dataDoughnut = {
-    labels: ["Masculino", "Feminino"],
+    labels: ["Feminino", "Masculino", "Outro"],
     datasets: [
       {
-        data: [170, 100],
-        backgroundColor: ["#F3F00D", "#0f0f0e"],
+        data: [40, 55, 5],
+        backgroundColor: ["#F3F00D", "#0f0f0e", "#e9e9e9"],
       },
     ],
   };

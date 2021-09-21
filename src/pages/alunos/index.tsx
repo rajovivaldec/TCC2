@@ -12,14 +12,12 @@ import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
 
 export default function Alunos() {
-  const nome = useForm();
+  const name = useForm();
   const email = useForm("email");
-  const genero = useForm();
-  const celular = useForm("celular");
-  const idade = useForm();
-  const endereco = useForm();
+  const phoneNumber = useForm("celular");
+  const age = useForm();
+  const address = useForm();
   const cpf = useForm("cpf");
-  const aula = useForm();
 
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
@@ -37,6 +35,22 @@ export default function Alunos() {
     {
       id: 3,
       nome: "Anual",
+    },
+  ];
+
+  const [selectGender, setSelectGender] = useState("");
+  const genders = [
+    {
+      id: 1,
+      nome: "Feminino",
+    },
+    {
+      id: 2,
+      nome: "Masculino",
+    },
+    {
+      id: 3,
+      nome: "Outro",
     },
   ];
 
@@ -69,14 +83,14 @@ export default function Alunos() {
       celular: "99778-2536",
       genero: "Masculino",
       idade: 22,
-      plano: "Semanal",
+      plano: "Anual",
     },
     {
-      nome: "Julia",
-      email: "julia@hotmail.com",
+      nome: "Monique",
+      email: "monique@hotmail.com",
       celular: "99254-9806",
       genero: "Feminino",
-      idade: 19,
+      idade: 23,
       plano: "Semanal",
     },
     {
@@ -85,7 +99,7 @@ export default function Alunos() {
       celular: "99687-1436",
       genero: "Masculino",
       idade: 21,
-      plano: "Mensal",
+      plano: "Diário",
     },
   ];
 
@@ -99,7 +113,7 @@ export default function Alunos() {
               <Button onClick={showRegister}>Cadastrar Novo Aluno</Button>
               <InputSearch
                 onSubmit={() => console.log("test")}
-                placeHolder="Buscar Alunos.."
+                placeHolder="Buscar Alunos..."
               />
             </header>
 
@@ -110,7 +124,7 @@ export default function Alunos() {
         </section>
       ) : registerVisible ? (
         <section className={styles.container}>
-          <h1>Cadastrar Alunos</h1>
+          <h1>Cadastrar Aluno</h1>
           <BgWhite>
             <button onClick={showHome} className="btnBack">
               <Image
@@ -131,7 +145,7 @@ export default function Alunos() {
                   id="nome"
                   placeholder="Insira seu nome completo"
                   required
-                  {...nome}
+                  {...name}
                 />
               </div>
               <div>
@@ -155,13 +169,13 @@ export default function Alunos() {
                 />
               </div>
               <div>
-                <Input
+                <Select
                   label="Gênero"
-                  type="text"
+                  value={selectGender}
+                  setValue={setSelectGender}
+                  options={genders}
+                  defaultValue="Selecione um gênero"
                   id="genero"
-                  placeholder="Selecione um gênero"
-                  required
-                  {...genero}
                 />
               </div>
               <div>
@@ -171,7 +185,7 @@ export default function Alunos() {
                   id="celular"
                   placeholder="Insira seu celular"
                   required
-                  {...celular}
+                  {...phoneNumber}
                 />
               </div>
               <div>
@@ -181,7 +195,7 @@ export default function Alunos() {
                   id="idade"
                   placeholder="Insira sua idade"
                   required
-                  {...idade}
+                  {...age}
                 />
               </div>
               <div>
@@ -191,7 +205,7 @@ export default function Alunos() {
                   id="endereco"
                   placeholder="Insira seu endereço"
                   required
-                  {...endereco}
+                  {...address}
                 />
               </div>
               <div>

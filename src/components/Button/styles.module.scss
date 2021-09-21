@@ -29,3 +29,15 @@
     background-color: rgb(34, 34, 34);
   }
 }
+
+.loading {
+  cursor: not-allowed;
+  color: #0f0f0e65;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  div {
+    margin-left: 1rem;
+  }
+}

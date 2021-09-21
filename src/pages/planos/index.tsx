@@ -1,37 +1,67 @@
+import Image from "next/image";
 import { BgWhite } from "../../components/BgWhite";
-import { useVisibleContent } from "../../hooks/useVisibleContent";
 import { Button } from "../../components/Button";
 import { InputSearch } from "../../components/InputSearch";
 import { Table } from "../../components/Table";
-import Image from "next/image";
+import { useVisibleContent } from "../../hooks/useVisibleContent";
 import styles from "./styles.module.scss";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
+import { Select } from "../../components/Select";
+import { useState } from "react";
 
-export default function Despesas() {
+export default function Planos() {
   const name = useForm();
-  const expense = useForm();
+  const price = useForm();
 
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
 
-  const tableHead = ["Nome", "Despesa"];
+  const [selectPeriod, setSelectPeriod] = useState("");
+  const periods = [
+    {
+      id: 1,
+      nome: "Semanal",
+    },
+    {
+      id: 2,
+      nome: "Mensal",
+    },
+    {
+      id: 3,
+      nome: "Trimestral",
+    },
+    {
+      id: 4,
+      nome: "Semestral",
+    },
+    {
+      id: 5,
+      nome: "Anual",
+    },
+  ];
+
+  const tableHead = ["Nome", "Preço", "Período"];
   const tableBody = [
     {
-      nome: "Conta de luz",
-      despesa: 149.9,
+      nome: "Premium - Mensal",
+      preco: 149.9,
+      periodo: "Mensal",
     },
     {
-      nome: "Conta de luz",
-      despesa: 149.9,
+      nome: "Premium - Anual",
+      preco: 200,
+      periodo: "Anual",
     },
     {
-      nome: "Conta de luz",
-      despesa: 149.9,
+      nome: "Básico - Semanal",
+      preco: 79.9,
+      periodo: "Semanal",
     },
     {
-      nome: "Conta de luz",
-      despesa: 149.9,
+      nome: "Básico - Diário",
+      preco: 50,
+      periodo: "Diário",
     },
   ];
 
@@ -39,13 +69,13 @@ export default function Despesas() {
     <>
       {homeVisible ? (
         <section className={styles.container}>
-          <h1>Despesas</h1>
+          <h1>Planos</h1>
           <BgWhite>
             <header>
-              <Button onClick={showRegister}>Cadastrar Despesas Fixas</Button>
+              <Button onClick={showRegister}>Cadastrar Novo Plano</Button>
               <InputSearch
                 onSubmit={() => console.log("test")}
-                placeHolder="Buscar Despesas.."
+                placeHolder="Buscar Planos..."
               />
             </header>
 
@@ -56,7 +86,7 @@ export default function Despesas() {
         </section>
       ) : registerVisible ? (
         <section className={styles.container}>
-          <h1>Cadastrar Despesa Fixa</h1>
+          <h1>Cadastrar Plano</h1>
           <BgWhite>
             <button onClick={showHome} className="btnBack">
               <Image
@@ -75,24 +105,34 @@ export default function Despesas() {
                   label="Nome"
                   type="text"
                   id="nome"
-                  placeholder="Insira o nome da despesa"
+                  placeholder="Insira o nome do plano"
                   required
                   {...name}
                 />
               </div>
               <div>
                 <Input
-                  label="Valor da Despesa"
+                  label="Preço"
                   type="number"
-                  id="despesa"
-                  placeholder="Insira o valor da despesa"
+                  id="preco"
+                  placeholder="Insira o preço do plano"
                   required
-                  {...expense}
+                  {...price}
+                />
+              </div>
+              <div>
+                <Select
+                  label="Período"
+                  value={selectPeriod}
+                  setValue={setSelectPeriod}
+                  options={periods}
+                  defaultValue="Selecione um período"
+                  id="periodo"
                 />
               </div>
             </div>
             <div className={styles.btnRegister}>
-              <Button onClick={() => console.log("despesa")}>Cadastrar</Button>
+              <Button>Cadastrar</Button>
             </div>
           </BgWhite>
         </section>
