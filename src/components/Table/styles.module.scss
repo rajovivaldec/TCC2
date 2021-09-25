@@ -46,7 +46,6 @@
         display: flex;
         justify-content: flex-end;
         flex-wrap: nowrap;
-        
 
         button {
           border: none;
@@ -55,7 +54,6 @@
           img {
             min-width: 24px;
           }
-          
 
           &:first-child {
             margin-right: 24px;
@@ -63,10 +61,14 @@
         }
       }
     }
+
+    .link {
+      display: block;
+    }
   }
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .tableContainer {
     max-width: 700px;
   }

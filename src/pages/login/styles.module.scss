@@ -194,6 +194,12 @@
   }
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  margin: var(--s32) 0;
+}
+
 @media (max-width: 960px) {
   .containerSignIn,
   .containerSignUp {

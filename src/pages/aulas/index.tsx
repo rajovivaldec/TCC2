@@ -57,7 +57,7 @@ export default function Aulas() {
 
             <hr />
 
-            <Table tHead={tableHead} tBody={tableBody} />
+            <Table tHead={tableHead} tBody={tableBody} link/>
           </BgWhite>
         </section>
       ) : registerVisible ? (
@@ -92,7 +92,7 @@ export default function Aulas() {
               <div>
                 <Input
                   label="Data"
-                  type="date" // esse input é maior que os outros, tem uma height maior
+                  type="date"
                   id="data"
                   placeholder="Insira a data da aula"
                   required
@@ -109,7 +109,7 @@ export default function Aulas() {
                   {...description}
                 />
               </div>
-              <div>
+              <div className={styles.resources}>
                 <Input
                   label="Recursos"
                   type="text"

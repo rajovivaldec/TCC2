@@ -2,6 +2,7 @@ import Image from "next/image";
 import Router from "next/router";
 import { useState } from "react";
 import { Input } from "../../components/Input";
+import { Loader } from "../../components/Loader";
 import { useForm } from "../../hooks/useForm";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
 import { supabase } from "../../lib/initSupabase";
@@ -147,6 +148,11 @@ export default function Login() {
                   <div onClick={showForgotPass}>Esqueceu a senha?</div>
                 </div>
               </form>
+              {loading && (
+                <div className={styles.loading}>
+                  <Loader />
+                </div>
+              )}
             </div>
           </section>
         </main>
@@ -218,6 +224,11 @@ export default function Login() {
                   )}
                 </div>
               </form>
+              {loading && (
+                <div className={styles.loading}>
+                  <Loader />
+                </div>
+              )}
             </div>
           </section>
         </section>
@@ -277,6 +288,11 @@ export default function Login() {
                   </button>
                 )}
               </form>
+              {loading && (
+                <div className={styles.loading}>
+                  <Loader />
+                </div>
+              )}
             </div>
           </section>
         </section>

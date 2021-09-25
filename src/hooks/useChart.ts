@@ -53,7 +53,7 @@ export const useChart = () => {
     datasets: [
       {
         data: [40, 55, 5],
-        backgroundColor: ["#F3F00D", "#0f0f0e", "#e9e9e9"],
+        backgroundColor: ["#F3F00D", "#0f0f0e", "#CCCA00"],
       },
     ],
   };
