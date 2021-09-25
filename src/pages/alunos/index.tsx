@@ -56,18 +56,17 @@ export default function Alunos() {
 
   const [classes, setClasses] = useState([]);
   const availableClasses = [
-    "Matemática1",
-    "Português1",
-    "História1",
-    "Matemática2",
-    "Português2",
-    "História2",
-    "Matemática3",
-    "Português3",
-    "História3",
+    "Inglês 1",
+    "Matemática 1",
+    "Hardware 1",
+    "Volteio 1",
+    "Inglês 2",
+    "Matemática 2",
+    "Hardware 2",
+    "Volteio 2",
   ];
 
-  const tableHead = ["Nome", "Email", "Celular", "Gênero", "Idade", "Plano"];
+  const tableHead = ["Nome", "E-mail", "Celular", "Gênero", "Idade", "Plano"];
   const tableBody = [
     {
       nome: "Rafael",
@@ -75,7 +74,7 @@ export default function Alunos() {
       celular: "99778-2536",
       genero: "Masculino",
       idade: 20,
-      plano: "Mensal",
+      plano: "Hardware - 8x por mês",
     },
     {
       nome: "Vitor",
@@ -83,7 +82,7 @@ export default function Alunos() {
       celular: "99778-2536",
       genero: "Masculino",
       idade: 22,
-      plano: "Anual",
+      plano: "Matemática - 3x por semana",
     },
     {
       nome: "Monique",
@@ -91,7 +90,7 @@ export default function Alunos() {
       celular: "99254-9806",
       genero: "Feminino",
       idade: 23,
-      plano: "Semanal",
+      plano: "Inglês - 1x por semana",
     },
     {
       nome: "João Fernando",
@@ -99,7 +98,7 @@ export default function Alunos() {
       celular: "99687-1436",
       genero: "Masculino",
       idade: 21,
-      plano: "Diário",
+      plano: "Volteio - 2x por mês",
     },
   ];
 

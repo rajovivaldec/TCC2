@@ -12,12 +12,14 @@
   align-items: center;
   padding: var(--s24);
 }
+
 .containerSignUp {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100vh;
   grid-column: 1 /-1;
 }
+
 .right {
   padding: var(--s24);
   margin-top: 4rem;

@@ -36,22 +36,62 @@ export default function Dashboard() {
 
   if (!user) {
     return (
-      <div style={{ width: "300px" }}>
-        <h2 style={{ marginBottom: "1.5rem" }}>
-          Necessário estar logado para acessar essa página
-        </h2>
-        <Link href="/login">
-          <a
-            style={{
-              fontWeight: "bold",
-              textDecoration: "underline",
-              color: "#9b9e00",
-            }}
-          >
-            Logar aqui
-          </a>
-        </Link>
-      </div>
+      <section className={styles.containerLandingPage}>
+        <section className={styles.left}>
+          <div className={styles.logo}>
+            <Image
+              width="100%"
+              height="100%"
+              src="/imgs/logo.png"
+              alt="Logotipo RaJoVi"
+            />
+          </div>
+
+          <div className={styles.leftContent}>
+            <h1>
+              Esqueça planilhas e tenha o Melhor Gerenciamento de seu trabalho
+              como professor
+            </h1>
+            <p>
+              Insira seu email para receber as instruções da alteração da senha
+              Insira seu email para receber as instruções da alteração da senha
+              Insira seu email para receber as instruções da alteração da senha
+            </p>
+            <a href="http://localhost:3000/login" className={styles.btnLogin}>
+              Cadastrar Novo Aluno
+            </a>
+          </div>
+        </section>
+
+        <section className={styles.right}>
+          <div className={styles.social}>
+            <Image
+              width="32px"
+              height="32px"
+              src="/imgs/logo.png"
+              alt="Logotipo Instagram"
+            />
+            <Image
+              width="32px"
+              height="32px"
+              src="/imgs/logo.png"
+              alt="Logotipo Facebook"
+            />
+            <Image
+              width="32px"
+              height="32px"
+              src="/imgs/logo.png"
+              alt="Logotipo E-mail"
+            />
+          </div>
+          <Image
+            width="812"
+            height="627"
+            src="/imgs/laptop.jpg"
+            alt="Notebook no site da plataforma para professores"
+          />
+        </section>
+      </section>
     );
   }
 
@@ -142,10 +182,7 @@ export default function Dashboard() {
                 <hr />
 
                 <div className={styles.doughnutChart}>
-                  <Doughnut
-                    data={dataDoughnut}
-                    options={optionsDoughnut}
-                  />
+                  <Doughnut data={dataDoughnut} options={optionsDoughnut} />
                 </div>
               </BgWhite>
             </div>

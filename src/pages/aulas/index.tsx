@@ -17,25 +17,25 @@ export default function Aulas() {
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
 
-  const tableHead = ["Aulas", "Quantidade de Alunos", "Quantidade de Aulas"];
+  const tableHead = ["Aula", "Quantidade de Alunos", "Quantidade de Aulas"];
   const tableBody = [
     {
-      disciplina: "Compiladores",
+      disciplina: "Inglês",
       qtdAlunos: 10,
       qtdAulas: 20,
     },
     {
-      disciplina: "Teoria dos Grafos",
+      disciplina: "Matemática",
       qtdAlunos: 6,
       qtdAulas: 14,
     },
     {
-      disciplina: "Inteligência Artificial",
+      disciplina: "Hardware",
       qtdAlunos: 14,
       qtdAulas: 22,
     },
     {
-      disciplina: "Banco de Dados I",
+      disciplina: "Volteio",
       qtdAlunos: 27,
       qtdAulas: 19,
     },
