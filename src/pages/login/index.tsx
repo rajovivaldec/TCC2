@@ -246,7 +246,7 @@ export default function Login() {
           <section className={styles.right}>
             <div className={`${styles.rightContent} animeLeft`}>
               <button className={styles.arrow} onClick={showSignIn}>
-                <Image
+                <Image className={styles.logo}
                   width="39.06"
                   height="26.05"
                   src="/icons/setaVoltar.svg"

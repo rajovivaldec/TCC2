@@ -32,24 +32,24 @@ export default function Planos() {
   const tableHead = ["Nome", "Preço", "Período"];
   const tableBody = [
     {
-      nome: "Premium - Mensal",
-      preco: 149.9,
-      periodo: "Mensal",
-    },
-    {
-      nome: "Premium - Anual",
-      preco: 200,
-      periodo: "Anual",
-    },
-    {
-      nome: "Básico - Semanal",
-      preco: 79.9,
+      nome: "Inglês - 1x por semana",
+      preco: 30,
       periodo: "Semanal",
     },
     {
-      nome: "Básico - Diário",
-      preco: 50,
-      periodo: "Diário",
+      nome: "Matemática - 3x por semana",
+      preco: 75,
+      periodo: "Semanal",
+    },
+    {
+      nome: "Hardware - 8x por mês",
+      preco: 220,
+      periodo: "Mensal",
+    },
+    {
+      nome: "Volteio - 2x por mês",
+      preco: 65,
+      periodo: "Mensal",
     },
   ];
 

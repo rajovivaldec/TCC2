@@ -19,19 +19,19 @@ export default function Despesas() {
   const tableBody = [
     {
       nome: "Conta de luz",
-      despesa: 149.9,
+      despesa: 150,
     },
     {
-      nome: "Conta de luz",
-      despesa: 149.9,
+      nome: "Condomínio",
+      despesa: 500,
     },
     {
-      nome: "Conta de luz",
-      despesa: 149.9,
+      nome: "Internet",
+      despesa: 90,
     },
     {
-      nome: "Conta de luz",
-      despesa: 149.9,
+      nome: "Plano de celular",
+      despesa: 60,
     },
   ];
 
