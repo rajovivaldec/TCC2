@@ -27,18 +27,6 @@ export default function Planos() {
       id: 2,
       nome: "Mensal",
     },
-    {
-      id: 3,
-      nome: "Trimestral",
-    },
-    {
-      id: 4,
-      nome: "Semestral",
-    },
-    {
-      id: 5,
-      nome: "Anual",
-    },
   ];
 
   const tableHead = ["Nome", "Preço", "Período"];
