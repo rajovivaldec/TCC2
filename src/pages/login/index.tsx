@@ -188,14 +188,6 @@ export default function Login() {
                 className={styles.registerForm}
                 onSubmit={handleSubmitSignUp}
               >
-                <Input
-                  label="Nome Completo"
-                  type="text"
-                  id="name"
-                  placeholder="Insira seu nome completo"
-                  required
-                  {...name}
-                />
                 <div>
                   <Input
                     label="E-mail"
@@ -246,7 +238,8 @@ export default function Login() {
           <section className={styles.right}>
             <div className={`${styles.rightContent} animeLeft`}>
               <button className={styles.arrow} onClick={showSignIn}>
-                <Image className={styles.logo}
+                <Image
+                  className={styles.logo}
                   width="39.06"
                   height="26.05"
                   src="/icons/setaVoltar.svg"

@@ -9,6 +9,7 @@ import { ResetPassword } from "../components/ResetPassword";
 import { BgWhite } from "../components/BgWhite";
 import { useChart } from "../hooks/useChart";
 import styles from "../styles/home.module.scss";
+import { Button } from "../components/Button";
 
 export default function Dashboard() {
   const [showResetPass, setShowResetPass] = useState(false);
@@ -36,61 +37,63 @@ export default function Dashboard() {
 
   if (!user) {
     return (
-      <section className={styles.containerLandingPage}>
-        <section className={styles.left}>
-          <div className={styles.logo}>
-            <Image
-              width="100%"
-              height="100%"
-              src="/imgs/logo.png"
-              alt="Logotipo RaJoVi"
-            />
+      <section className={styles.landingpageContainer}>
+        <header>
+          <span>RJV</span>
+          <div className={styles.social}>
+            <Link href="#">
+              <a>
+                <Image
+                  width="16"
+                  height="16"
+                  src="/icons/instagramIcon.svg"
+                  alt="Icone de moeda"
+                />
+              </a>
+            </Link>
+            <Link href="#">
+              <a>
+                <Image
+                  width="16"
+                  height="16"
+                  src="/icons/facebookIcon.svg"
+                  alt="Icone de moeda"
+                />
+              </a>
+            </Link>
+            <Link href="#">
+              <a>
+                <Image
+                  width="16"
+                  height="16"
+                  src="/icons/emailIcon.svg"
+                  alt="Icone de moeda"
+                />
+              </a>
+            </Link>
           </div>
+        </header>
 
-          <div className={styles.leftContent}>
+        <main className={styles.content}>
+          <div className={styles.text}>
             <h1>
-              Esqueça planilhas e tenha o Melhor Gerenciamento de seu trabalho
-              como professor
+              Esqueça planilhas e tenha o <strong>Melhor Gerenciamento</strong>{" "}
+              de seu trabalho como professor
             </h1>
             <p>
-              Insira seu email para receber as instruções da alteração da senha
-              Insira seu email para receber as instruções da alteração da senha
-              Insira seu email para receber as instruções da alteração da senha
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
+              eaque ad voluptatum, alias odio cupiditate possimus impedit
+              delectus iste molestiae, nesciunt tempora minima ullam aperiam
             </p>
-            <a href="http://localhost:3000/login" className={styles.btnLogin}>
-              Cadastrar Novo Aluno
-            </a>
+            <Link href="/login">
+              <a>
+                <Button>Cadastrar-se</Button>
+              </a>
+            </Link>
           </div>
-        </section>
 
-        <section className={styles.right}>
-          <div className={styles.social}>
-            <Image
-              width="32px"
-              height="32px"
-              src="/imgs/logo.png"
-              alt="Logotipo Instagram"
-            />
-            <Image
-              width="32px"
-              height="32px"
-              src="/imgs/logo.png"
-              alt="Logotipo Facebook"
-            />
-            <Image
-              width="32px"
-              height="32px"
-              src="/imgs/logo.png"
-              alt="Logotipo E-mail"
-            />
-          </div>
-          <Image
-            width="812"
-            height="627"
-            src="/imgs/laptop.jpg"
-            alt="Notebook no site da plataforma para professores"
-          />
-        </section>
+          <div className={styles.imgHero}></div>
+        </main>
       </section>
     );
   }
@@ -140,7 +143,7 @@ export default function Dashboard() {
             <Link href="/aulas">
               <a className={styles.statisticsWrapper}>
                 <div>
-                  <h1>27</h1>
+                  <h1>08</h1>
                   <p>Aulas</p>
                 </div>
                 <Image
