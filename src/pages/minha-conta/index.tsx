@@ -1,8 +1,9 @@
 import { BgWhite } from "../../components/BgWhite";
 import { Button } from "../../components/Button";
-import styles from "./styles.module.scss";
+import { supabase } from "../../lib/initSupabase";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
+import styles from "./styles.module.scss";
 
 export default function MinhaConta() {
   const name = useForm();
@@ -54,3 +55,20 @@ export default function MinhaConta() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

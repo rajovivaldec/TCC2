@@ -1,5 +1,6 @@
 import { BgWhite } from "../../components/BgWhite";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
+import { supabase } from "../../lib/initSupabase";
 import { Button } from "../../components/Button";
 import { InputSearch } from "../../components/InputSearch";
 import { Table } from "../../components/Table";
@@ -100,3 +101,20 @@ export default function Despesas() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

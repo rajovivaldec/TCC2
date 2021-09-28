@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import { supabase } from "../../lib/initSupabase";
 import { BgWhite } from "../../components/BgWhite";
 import { Button } from "../../components/Button";
 import Checkbox from "../../components/Checkbox";
@@ -235,3 +236,20 @@ export default function Alunos() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

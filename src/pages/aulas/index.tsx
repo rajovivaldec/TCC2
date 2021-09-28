@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { supabase } from "../../lib/initSupabase";
 import { BgWhite } from "../../components/BgWhite";
 import { Button } from "../../components/Button";
 import { InputSearch } from "../../components/InputSearch";
@@ -130,3 +131,20 @@ export default function Aulas() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

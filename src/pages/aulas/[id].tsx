@@ -1,6 +1,7 @@
-import { BgWhite } from "../../components/BgWhite";
 import Link from "next/link";
 import Image from "next/image";
+import { BgWhite } from "../../components/BgWhite";
+import { supabase } from "../../lib/initSupabase";
 import styles from "./class.module.scss";
 
 export default function Class() {
@@ -118,3 +119,21 @@ export default function Class() {
     </section>
   );
 }
+
+
+export const getServerSideProps = async (ctx) => {
+  const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
