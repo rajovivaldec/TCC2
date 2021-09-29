@@ -8,8 +8,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { ResetPassword } from "../components/ResetPassword";
 import { BgWhite } from "../components/BgWhite";
 import { useChart } from "../hooks/useChart";
-import styles from "../styles/home.module.scss";
 import { Button } from "../components/Button";
+import styles from "../styles/home.module.scss";
 
 export default function Dashboard() {
   const [showResetPass, setShowResetPass] = useState(false);

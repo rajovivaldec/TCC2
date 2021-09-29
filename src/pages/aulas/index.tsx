@@ -1,19 +1,54 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { supabase } from "../../lib/initSupabase";
 import { BgWhite } from "../../components/BgWhite";
 import { Button } from "../../components/Button";
 import { InputSearch } from "../../components/InputSearch";
 import { Table } from "../../components/Table";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
-import styles from "./styles.module.scss";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
+import "react-quill/dist/quill.snow.css";
+import styles from "./styles.module.scss";
+import { useState } from "react";
+
+const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+  ssr: false,
+  // eslint-disable-next-line react/display-name
+  loading: () => <p>Loading ...</p>,
+});
+
+const modules = {
+  toolbar: [
+    ["bold", "italic", "underline"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link"],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+};
+
+const formats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+];
 
 export default function Aulas() {
   const name = useForm();
   const classDate = useForm();
   const description = useForm();
-  const resources = useForm();
+  const [resources, setResources] = useState("");
 
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
@@ -58,7 +93,7 @@ export default function Aulas() {
 
             <hr />
 
-            <Table tHead={tableHead} tBody={tableBody} link/>
+            <Table tHead={tableHead} tBody={tableBody} link />
           </BgWhite>
         </section>
       ) : registerVisible ? (
@@ -111,13 +146,13 @@ export default function Aulas() {
                 />
               </div>
               <div className={styles.resources}>
-                <Input
-                  label="Recursos"
-                  type="text"
-                  id="recursos"
-                  placeholder="Insira os recursos utilizados na aula"
-                  required
-                  {...resources}
+                <QuillNoSSRWrapper
+                  placeholder="Insira o Conteúdo da Aula"
+                  theme="snow"
+                  modules={modules}
+                  formats={formats}
+                  value={resources}
+                  onChange={setResources}
                 />
               </div>
               <button className={styles.btnAdd}>+</button>
