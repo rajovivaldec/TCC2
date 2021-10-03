@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import { Line, Doughnut } from "react-chartjs-2";
+import { Line, Doughnut, Bar } from "react-chartjs-2";
 import { supabase } from "../lib/initSupabase";
 import { useAuth } from "../contexts/AuthContext";
 import { ResetPassword } from "../components/ResetPassword";
@@ -15,7 +15,14 @@ export default function Dashboard() {
   const [showResetPass, setShowResetPass] = useState(false);
   const [messageRedirect, setMessageRedirect] = useState(false);
   const { user } = useAuth();
-  const { dataLine, optionsLine, dataDoughnut, optionsDoughnut } = useChart();
+  const {
+    dataLine,
+    optionsLine,
+    dataDoughnut,
+    optionsDoughnut,
+    dataBar,
+    optionsBar,
+  } = useChart();
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
@@ -92,7 +99,15 @@ export default function Dashboard() {
             </Link>
           </div>
 
-          <div className={styles.imgHero}></div>
+          <div className={styles.imgHero}>
+            <Image
+              width={678}
+              height={490}
+              src="/imgs/laptop.png"
+              alt="Notebook na plataforma"
+              objectFit="contain"
+            />
+          </div>
         </main>
       </section>
     );
@@ -171,13 +186,13 @@ export default function Dashboard() {
           </nav>
 
           <section className={styles.dashboardContainer}>
-            <div className={styles.chartContainer}>
+            <div className={styles.chartsContainer}>
               <BgWhite>
-                <h2>Receita/mês</h2>
+                <h2>Quantidade de Alunos por Planos</h2>
                 <hr />
 
-                <div className={styles.lineChart}>
-                  <Line data={dataLine} options={optionsLine} />
+                <div className={styles.barChart}>
+                  <Bar data={dataBar} options={optionsBar} />
                 </div>
               </BgWhite>
               <BgWhite>
@@ -186,6 +201,17 @@ export default function Dashboard() {
 
                 <div className={styles.doughnutChart}>
                   <Doughnut data={dataDoughnut} options={optionsDoughnut} />
+                </div>
+              </BgWhite>
+            </div>
+
+            <div className={styles.lineChartContainer}>
+              <BgWhite>
+                <h2>Receita/mês</h2>
+                <hr />
+
+                <div className={styles.lineChart}>
+                  <Line data={dataLine} options={optionsLine} />
                 </div>
               </BgWhite>
             </div>

@@ -38,6 +38,9 @@ export const useChart = () => {
       },
       y: {
         beginAtZero: true,
+        grid: {
+          display: false,
+        },
         // display: false,
       },
     },
@@ -70,10 +73,52 @@ export const useChart = () => {
     },
   };
 
+  const dataBar = {
+    labels: [
+      "Inglês - 2x semana",
+      "Inglês - 3x por semana",
+      "Letras - 1x por semana",
+      "TCC - 1x por mês",
+      "Gramática - 2x por semana",
+      "Português - 1x por semana",
+      "Letras - 1x por semana",
+    ],
+    datasets: [
+      {
+        data: [40, 55, 15, 32, 12, 22, 40, 55, 15],
+        backgroundColor: ["#F3F00D", "#0f0f0e"],
+        barThickness: 45,
+      },
+    ],
+  };
+
+  const optionsBar = {
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   return {
     dataLine,
     optionsLine,
     dataDoughnut,
     optionsDoughnut,
+    dataBar,
+    optionsBar,
   };
 };

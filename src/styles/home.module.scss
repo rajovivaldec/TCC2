@@ -52,12 +52,16 @@
     font-size: var(--s24);
   }
 
-  .chartContainer,
+  .chartsContainer,
   .tableContainer {
-    margin-bottom: var(--s64);
+    margin-bottom: var(--s16);
     display: grid;
     grid-template-columns: 1.6fr 1fr;
     gap: var(--s16);
+  }
+
+  .lineChartContainer {
+    margin-bottom: var(--s64);
   }
 
   .headerFirstTable {
@@ -151,13 +155,19 @@
 }
 
 .lineChart {
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .doughnutChart {
   max-width: 350px;
   margin: 0 auto;
+}
+
+.barChart {
+  max-width: 700px;
+  margin: 0 auto;
+  overflow: auto;
 }
 
 @media (max-width: 1595px) {
@@ -183,56 +193,57 @@
 }
 
 @media (min-width: 1820px) {
-  .lineChart {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
   .doughnutChart {
     max-width: 450px;
-    margin: 0 auto;
+  }
+  .barChart {
+    max-width: 900px;
+  }
+  .lineChart {
+    max-width: 1100px;
   }
 }
 
 @media (max-width: 1525px) {
-  .lineChart {
+  .barChart {
     max-width: 550px;
-    margin: 0 auto;
   }
-
   .doughnutChart {
     max-width: 275px;
-    margin: 0 auto;
+  }
+  .lineChart {
+    max-width: 550px;
   }
 }
 
 @media (max-width: 1300px) {
-  .lineChart {
+  .barChart {
     max-width: 450px;
-    margin: 0 auto;
   }
-
   .doughnutChart {
     max-width: 225px;
-    margin: 0 auto;
+  }
+  .lineChart {
+    max-width: 450px;
   }
 }
 
 @media (max-width: 1160px) {
   .dashboardContainer {
-    .chartContainer,
+    .chartsContainer,
     .tableContainer {
       grid-template-columns: 1fr;
     }
   }
-  .lineChart {
-    max-width: 500px;
-    margin: 0 auto;
-  }
 
+  .barChart {
+    max-width: 500px;
+  }
   .doughnutChart {
     max-width: 250px;
-    margin: 0 auto;
+  }
+  .lineChart {
+    max-width: 500px;
   }
 }
 
@@ -277,9 +288,7 @@
     align-items: center;
 
     .imgHero {
-      min-width: 500px;
-      height: 600px;
-      background-color: #eee;
+      width: 100%;
     }
   }
   .text {
