@@ -103,8 +103,8 @@ export default function Dashboard() {
             <Image
               width={678}
               height={490}
-              src="/imgs/laptop.png"
-              alt="Notebook na plataforma"
+              src="/imgs/illustrationHero.svg"
+              alt="Ilustração principal"
               objectFit="contain"
             />
           </div>

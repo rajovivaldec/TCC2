@@ -51,6 +51,10 @@
     font-weight: bold;
     position: relative;
     bottom: 3px;
+    white-space: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .menuHamburger {

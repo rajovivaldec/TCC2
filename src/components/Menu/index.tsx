@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Router from "next/router";
 import { ActiveLink } from "../ActiveLink";
@@ -7,6 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 export const Menu = ({ toggleMenu, setToggleMenu }) => {
   const { user } = useAuth();
+  const [userName, setUserName] = useState("");
 
   function handleToggleMenu() {
     setToggleMenu(!toggleMenu);
@@ -17,6 +19,21 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
     Router.push("/login");
   }
 
+  useEffect(() => {
+    async function setNameOnMenu() {
+      if (user) {
+        let { data } = await supabase
+          .from("nomes_usuarios")
+          .select("nome")
+          .eq("user_id", user.id)
+          .single();
+
+        if (data) setUserName(data.nome);
+      }
+    }
+    setNameOnMenu();
+  }, [user]);
+
   if (!user) return null;
 
   return (
@@ -24,7 +41,8 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
       className={`${styles.menuContainer} ${toggleMenu ? styles.mobile : ""}`}
     >
       <div className={styles.header}>
-        <span>Olá John Doe</span>
+        {userName ? <span>Olá {userName}</span> : <span>Bem Vindo!</span>}
+
         <button
           className={styles.menuHamburger}
           onClick={handleToggleMenu}
