@@ -13,10 +13,12 @@ export default function MinhaConta() {
   const email = useForm("email");
   const password = useForm("password");
   const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
     if (user && password.validate()) {
       const { error } = await supabase.auth.update({
@@ -25,6 +27,7 @@ export default function MinhaConta() {
       });
       if (error) setError(error.message);
 
+      setLoading(false);
       alert("Dados alterados com Sucesso!");
     } else {
       alert("Necessário preencher os campos corretamente");
@@ -36,7 +39,7 @@ export default function MinhaConta() {
   useEffect(() => {
     if (user) email.setValue(user.email);
     selectName();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   async function upsertName() {
@@ -50,12 +53,14 @@ export default function MinhaConta() {
       if (data) {
         updateName(data);
       } else {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("nomes_usuarios")
-          .insert({ nome: name.value, user_id: user.id });
+          .insert({ nome: name.value, user_id: user.id })
+          .single();
 
         if (error) setError(error.message);
-        window.location.reload();
+        console.log(data);
+        name.setValue(data.nome);
       }
     } else {
       alert("Necessário preencher os campos corretamente");
@@ -82,13 +87,14 @@ export default function MinhaConta() {
 
   async function updateName(nameUser) {
     if (nameUser) {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("nomes_usuarios")
         .update({ nome: name.value })
-        .eq("user_id", user.id);
+        .eq("user_id", user.id)
+        .single();
 
       if (error) setError(error.message);
-      window.location.reload()
+      name.setValue(data.nome);
     }
   }
 
@@ -134,7 +140,13 @@ export default function MinhaConta() {
               </div>
             </div>
             <div className={styles.btnSave}>
-              <Button>Salvar</Button>
+              {loading ? (
+                <Button isLoading disabled>
+                  Salvando...
+                </Button>
+              ) : (
+                <Button>Salvar</Button>
+              )}
             </div>
           </form>
         </BgWhite>

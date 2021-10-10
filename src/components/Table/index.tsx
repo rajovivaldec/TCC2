@@ -98,7 +98,12 @@ export const Table = ({ tHead, tBody, link = false }) => {
             </thead>
             <tbody>
               {tBody.map((item, idx) => {
-                return <RowLink key={idx} item={item} />;
+                return (
+                  <RowLink
+                    key={idx}
+                    item={item}
+                  />
+                );
               })}
             </tbody>
           </table>

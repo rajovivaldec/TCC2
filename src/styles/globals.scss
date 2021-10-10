@@ -77,14 +77,155 @@ a {
   min-height: 200px;
 }
 
+// Table
+.tableContainer {
+  border-radius: 2px 2px 0 0;
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  transition: 0.2s;
+  overflow-x: scroll;
+
+  thead {
+    th {
+      position: -webkit-sticky; /* for Safari */
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: var(--black-main);
+      color: var(--white);
+      text-align: left;
+      font-size: 1.1rem;
+      padding: var(--s24);
+    }
+  }
+
+  tbody {
+    tr {
+      &:hover {
+        background-color: var(--yellow-100);
+      }
+
+      &:nth-of-type(even) {
+        background-color: var(--gray-100);
+
+        &:hover {
+          background-color: var(--yellow-100);
+        }
+      }
+    }
+
+    td {
+      padding: var(--s16) var(--s24);
+
+      &:last-child {
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+
+        button {
+          border: none;
+          background: none;
+
+          img {
+            min-width: 24px;
+          }
+
+          &:first-child {
+            margin-right: 24px;
+          }
+        }
+      }
+    }
+
+    .link {
+      display: block;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .tableContainer {
+    max-width: 700px;
+  }
+}
+
+// Modal
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modalWrapper {
+    max-width: 440px;
+    padding: var(--s32);
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+    h3 {
+      font-size: var(--s32);
+      margin-bottom: var(--s32);
+    }
+
+    p {
+      margin-bottom: var(--s64);
+    }
+
+    .btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s32);
+
+      button {
+        font-weight: bold;
+        border: none;
+        padding: 1rem;
+        border-radius: 2px;
+        transition: 0.2s ease;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+      }
+      button:nth-child(1) {
+        background-color: var(--yellow-main);
+        color: var(--black-main);
+      }
+      button:nth-child(2) {
+        background-color: var(--black-main);
+        color: var(--white);
+      }
+    }
+  }
+}
+
 // Animações
 .animeLeft {
   opacity: 0;
   transform: translateX(-20px);
-  animation: animeLeft 0.3s forwards;
+  animation: anime 0.3s forwards;
 }
 
-@keyframes animeLeft {
+.animeUp {
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: anime 0.3s forwards;
+}
+
+@keyframes anime {
   to {
     opacity: 1;
     transform: initial;
