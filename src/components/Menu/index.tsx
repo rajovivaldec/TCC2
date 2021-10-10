@@ -60,7 +60,7 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
                   <Image
                     src="/icons/dashHeader.svg"
                     width="24"
-                    height="22"
+                    height="24"
                     alt="Dashboard"
                   />
                   Dashboard
@@ -155,7 +155,7 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
                   <Image
                     src="/icons/dashHeader.svg"
                     width="24"
-                    height="22"
+                    height="24"
                     alt="Dashboard"
                   />
                 </a>

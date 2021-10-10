@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Image from "next/image";
 import { supabase } from "../../lib/initSupabase";
 import { BgWhite } from "../../components/BgWhite";
@@ -54,7 +54,7 @@ export default function Planos(plans: PlansProps) {
     },
   ];
 
-  async function submitPlan(e) {
+  async function submitPlan(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
 
@@ -96,6 +96,7 @@ export default function Planos(plans: PlansProps) {
   function handleEdit(plan) {
     showEdit();
     setPlanEdit(plan);
+    setPlanDeleteId(plan.id);
     name.setValue(plan.nome);
     price.setValue(plan.preco);
     setSelectPeriod(plan.periodo);
@@ -124,6 +125,7 @@ export default function Planos(plans: PlansProps) {
     setPlansArray(updatedPlan);
     setPlanEdit(null);
     setLoading(false);
+    showHome();
   }
 
   function handleDelete(id) {
@@ -143,6 +145,7 @@ export default function Planos(plans: PlansProps) {
     setPlansArray(deletedPlan);
     setShowModal(false);
     setPlanDeleteId(null);
+    showHome();
   }
 
   function registerNewPlanBtn() {
@@ -212,20 +215,6 @@ export default function Planos(plans: PlansProps) {
               </table>
             </div>
           </BgWhite>
-
-          {showModal && (
-            <div className="modal" id="modal" onClick={handleOutsideClick}>
-              <div className="modalWrapper animeUp">
-                <h3>Deseja Excluir o Plano?</h3>
-                <p>Após excluido um item não é possível restaurá-lo</p>
-
-                <div className="btns">
-                  <button onClick={deletePlan}>Confirmar</button>
-                  <button onClick={() => setShowModal(false)}>Cancelar</button>
-                </div>
-              </div>
-            </div>
-          )}
         </section>
       ) : registerVisible || editVisible ? (
         <section className={styles.container}>
@@ -244,64 +233,79 @@ export default function Planos(plans: PlansProps) {
 
             {error && <p>{error}</p>}
 
-            <form onSubmit={submitPlan}>
-              <div className={styles.registerWrapper}>
-                <div>
-                  <Input
-                    label="Nome"
-                    type="text"
-                    id="nome"
-                    placeholder="Insira o nome do plano"
-                    required
-                    {...name}
-                  />
-                </div>
-                <div>
-                  <Input
-                    label="Preço"
-                    type="number"
-                    id="preco"
-                    placeholder="Insira o preço do plano"
-                    required
-                    {...price}
-                  />
-                </div>
-                <div>
-                  <Select
-                    label="Período"
-                    value={selectPeriod}
-                    setValue={setSelectPeriod}
-                    options={periods}
-                    defaultValue="Selecione um período"
-                    id="periodo"
-                  />
-                </div>
+            <div className={styles.registerWrapper}>
+              <div>
+                <Input
+                  label="Nome"
+                  type="text"
+                  id="nome"
+                  placeholder="Insira o nome do plano"
+                  required
+                  {...name}
+                />
               </div>
-              <div className={styles.btnRegister}>
-                {registerVisible ? (
-                  loading ? (
-                    <Button isLoading disabled>
-                      Cadastrando...
-                    </Button>
-                  ) : (
-                    <Button>Cadastrar</Button>
-                  )
-                ) : editVisible ? (
-                  loading ? (
-                    <Button isLoading disabled>
-                      Atualizando
-                    </Button>
-                  ) : (
-                    <Button name="update" value="Update">
-                      Salvar
-                    </Button>
-                  )
-                ) : null}
+              <div>
+                <Input
+                  label="Preço"
+                  type="number"
+                  id="preco"
+                  placeholder="Insira o preço do plano"
+                  required
+                  {...price}
+                />
               </div>
-            </form>
+              <div>
+                <Select
+                  label="Período"
+                  value={selectPeriod}
+                  setValue={setSelectPeriod}
+                  options={periods}
+                  defaultValue="Selecione um período"
+                  id="periodo"
+                />
+              </div>
+            </div>
+            <div className={styles.btnRegister}>
+              {registerVisible ? (
+                loading ? (
+                  <Button isLoading disabled>
+                    Cadastrando...
+                  </Button>
+                ) : (
+                  <Button onClick={submitPlan}>Cadastrar</Button>
+                )
+              ) : editVisible ? (
+                loading ? (
+                  <Button isLoading disabled>
+                    Atualizando
+                  </Button>
+                ) : (
+                  <div className="btnsEdit">
+                    <Button onClick={submitPlan}>Salvar</Button>
+                    <Button onClick={() => setShowModal(true)} black>
+                      Excluir
+                    </Button>
+                  </div>
+                )
+              ) : null}
+            </div>
           </BgWhite>
         </section>
       ) : null}
+
+      {showModal && (
+        <div className="modal" id="modal" onClick={handleOutsideClick}>
+          <div className="modalWrapper animeUp">
+            <h3>Deseja Excluir o Plano?</h3>
+            <p>Após excluido um item não é possível restaurá-lo</p>
+
+            <div className="btns">
+              <button onClick={deletePlan}>Confirmar</button>
+              <button onClick={() => setShowModal(false)}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
