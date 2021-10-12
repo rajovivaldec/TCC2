@@ -164,7 +164,7 @@ export default function Planos(plans: PlansProps) {
       {homeVisible ? (
         <section className={styles.container}>
           <h1>Planos</h1>
-          <BgWhite>
+          <BgWhite table>
             <header>
               <Button onClick={registerNewPlanBtn}>Cadastrar Novo Plano</Button>
               <InputSearch

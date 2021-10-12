@@ -41,7 +41,6 @@ export const useChart = () => {
         grid: {
           display: false,
         },
-        // display: false,
       },
     },
     plugins: {

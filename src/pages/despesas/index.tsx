@@ -147,7 +147,7 @@ export default function Despesas(expenditure: ExpenseProps) {
       {homeVisible ? (
         <section className={styles.container}>
           <h1>Despesas</h1>
-          <BgWhite>
+          <BgWhite table>
             <header>
               <Button onClick={registerNewPlanBtn}>
                 Cadastrar Despesas Fixas

@@ -6,24 +6,42 @@
 }
 
 .nameClasses {
-  grid-column: 1/-1;
-  margin-bottom: var(--s16);
+  margin-bottom: var(--s64);
 }
 
 .labelAddClasses {
-  grid-column: 1/-1;
   font-size: var(--s24);
   font-weight: bold;
-}
-
-.registerWrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s32);
+  margin-bottom: var(--s32);
 }
 
 .btnRegister {
   margin-top: var(--s64);
+}
+
+.contentWrap {
+  display: grid;
+  grid-template-columns: 30px 1fr 1fr;
+  gap: 32px;
+  grid-column: 1/-1;
+}
+
+.closeContent {
+  position: relative;
+  top: 56px;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: crimson;
+  font-weight: bold;
+  background-color: var(--gray-100);
+  box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.2);
+  transition: 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .btnAdd {
@@ -37,20 +55,24 @@
   font-weight: bold;
   grid-column: 1/-1;
   margin: 0 auto;
+  transition: 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .resources {
   grid-column: 1/-1;
 }
 
-@media (max-width: 1100px) {
-  .registerWrapper {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 @media (max-width: 750px) {
-  .registerWrapper {
+  .contentWrap {
     grid-template-columns: 1fr;
+
+    .closeContent {
+      top: 10px;
+      margin: auto;
+    }
   }
 }

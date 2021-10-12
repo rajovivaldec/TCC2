@@ -15,7 +15,7 @@ import { useState } from "react";
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
   ssr: false,
   // eslint-disable-next-line react/display-name
-  loading: () => <p>Loading ...</p>,
+  loading: () => <p>Carregando...</p>,
 });
 
 const modules = {
@@ -49,6 +49,7 @@ export default function Aulas() {
   const classDate = useForm();
   const description = useForm();
   const [resources, setResources] = useState("");
+  const [contentArray, setContentArray] = useState([]);
 
   const { homeVisible, editVisible, registerVisible, showHome, showRegister } =
     useVisibleContent();
@@ -76,6 +77,20 @@ export default function Aulas() {
       qtdAulas: 19,
     },
   ];
+
+  function handleAddContent() {
+    if (classDate.validate() && description.validate()) {
+      const newContent = {
+        data: classDate.value,
+        descricao: description.value,
+        recurso: resources,
+      };
+
+      setContentArray([...contentArray, newContent]);
+    } else {
+      alert("Necessário preencher os campos corretamente");
+    }
+  }
 
   return (
     <>
@@ -111,20 +126,21 @@ export default function Aulas() {
 
             <hr />
 
-            <div className={styles.registerWrapper}>
-              <div className={styles.nameClasses}>
-                <Input
-                  label="Nome"
-                  type="text"
-                  id="nome"
-                  placeholder="Insira o nome da aula"
-                  required
-                  {...name}
-                />
-              </div>
+            <div className={styles.nameClasses}>
+              <Input
+                label="Nome"
+                type="text"
+                id="nome"
+                placeholder="Insira o nome da aula"
+                required
+                {...name}
+              />
+            </div>
 
-              <p className={styles.labelAddClasses}>Adicionar Conteúdo</p>
+            <p className={styles.labelAddClasses}>Adicionar Conteúdo</p>
 
+            <div className={styles.contentWrap}>
+              <button className={styles.closeContent}>X</button>
               <div>
                 <Input
                   label="Data"
@@ -155,8 +171,49 @@ export default function Aulas() {
                   onChange={setResources}
                 />
               </div>
-              <button className={styles.btnAdd}>+</button>
+              {contentArray.map((item, idx) => (
+                <div key={idx} className={styles.contentWrap}>
+                  <button className={styles.closeContent}>X</button>
+                  <div>
+                    <Input
+                      label="Data"
+                      type="date"
+                      id="data"
+                      placeholder="Insira a data da aula"
+                      required
+                      value={item.data}
+                      {...classDate}
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      label="Descrição"
+                      type="text"
+                      id="descricao"
+                      placeholder="Insira a descrição da aula"
+                      required
+                      value={item.descricao}
+                      {...description}
+                    />
+                  </div>
+                  <div className={styles.resources}>
+                    <QuillNoSSRWrapper
+                      placeholder="Insira o Conteúdo da Aula"
+                      theme="snow"
+                      modules={modules}
+                      formats={formats}
+                      value={item.recurso}
+                      onChange={setResources}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              <button className={styles.btnAdd} onClick={handleAddContent}>
+                +
+              </button>
             </div>
+
             <div className={styles.btnRegister}>
               <Button onClick={() => console.log("aula")}>Cadastrar</Button>
             </div>

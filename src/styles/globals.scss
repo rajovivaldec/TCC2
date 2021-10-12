@@ -64,7 +64,7 @@ a {
 }
 
 .mainWrapper {
-  padding: var(--s32);
+  padding: var(--s32) var(--s32) var(--s32) var(--s16);
   grid-column: 2/-1;
 }
 
@@ -92,8 +92,6 @@ a {
 .table {
   border-collapse: collapse;
   width: 100%;
-  transition: 0.2s;
-  overflow-x: scroll;
 
   thead {
     th {
@@ -155,8 +153,12 @@ a {
 }
 
 @media (max-width: 768px) {
-  .tableContainer {
-    max-width: 700px;
+  // .tableContainer {
+  //   max-width: 700px;
+  // }
+
+  .mainWrapper {
+    padding: var(--s16) var(--s16) var(--s16) 0;
   }
 }
 
