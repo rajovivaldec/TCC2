@@ -80,7 +80,8 @@ a {
 }
 
 .ql-editor {
-  min-height: 200px;
+  min-height: 250px;
+  font-size: 1rem;
 }
 
 // Table
@@ -153,10 +154,6 @@ a {
 }
 
 @media (max-width: 768px) {
-  // .tableContainer {
-  //   max-width: 700px;
-  // }
-
   .mainWrapper {
     padding: var(--s16) var(--s16) var(--s16) 0;
   }
@@ -164,7 +161,7 @@ a {
 
 // Modal
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -177,7 +174,8 @@ a {
   text-align: center;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+  
 
   .modalWrapper {
     max-width: 480px;
