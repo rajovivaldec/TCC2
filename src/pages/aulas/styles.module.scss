@@ -149,3 +149,21 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .modalWrapp {
+    width: 90%;
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 420px) {
+  .btnsModalAddContent {
+    grid-column: 1/-1;
+    margin-top: var(--s32);
+
+    button:first-child {
+      margin-right: 0 !important;
+      margin-bottom: var(--s32);
+    }
+  }
+}

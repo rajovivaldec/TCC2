@@ -74,12 +74,7 @@ export default function Planos(plans: PlansProps) {
 
         if (error) setError(error.message);
 
-        const newPlan = {
-          nome: data.nome,
-          preco: data.preco,
-          periodo: data.periodo,
-        };
-        setPlansArray([...plansArray, newPlan]);
+        setPlansArray([...plansArray, data]);
         alert("Plano Cadastrado com Sucesso!");
         name.setValue("");
         price.setValue("");
@@ -189,7 +184,7 @@ export default function Planos(plans: PlansProps) {
                   {plansArray.map((plan) => (
                     <tr key={plan.id}>
                       <td>{plan.nome}</td>
-                      <td>{plan.preco}</td>
+                      <td>R$ {plan.preco.toString().replace(".", ",")}</td>
                       <td>{plan.periodo}</td>
                       <td>
                         <button onClick={() => handleEdit(plan)}>

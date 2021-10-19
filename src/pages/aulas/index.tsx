@@ -129,7 +129,6 @@ export default function Aulas({ classes }) {
   function handleOutsideClick(e) {
     if (e.target.id === "modal") {
       setShowModal(false);
-      setShowModalAddContent(false);
     }
   }
 
@@ -389,7 +388,12 @@ export default function Aulas({ classes }) {
                         <li key={resource.id}>
                           <div className={styles.contentContent}>
                             <label>Data</label>
-                            <p>{resource.data}</p>
+                            <p>
+                              {new Date(resource.data).toLocaleDateString(
+                                "pt-BR",
+                                { timeZone: "UTC" }
+                              )}
+                            </p>
                           </div>
                           <div className={styles.contentContent}>
                             <label>Descrição</label>

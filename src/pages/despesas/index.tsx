@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { BgWhite } from "../../components/BgWhite";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
@@ -20,7 +20,7 @@ type ExpenseProps = {
   data: Expense[];
 };
 
-export default function Despesas(expenditure: ExpenseProps) {
+export default function Despesas(expenditure) {
   const name = useForm();
   const expense = useForm();
   const { user } = useAuth();
@@ -30,6 +30,12 @@ export default function Despesas(expenditure: ExpenseProps) {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState("");
+  const [expenseTotal, setExpenseTotal] = useState(0);
+
+  useEffect(() => {
+    const total = expenseArray.reduce((acc, item) => acc + item.valor, 0);
+    setExpenseTotal(total);
+  }, [expenseArray]);
 
   const {
     homeVisible,
@@ -59,11 +65,7 @@ export default function Despesas(expenditure: ExpenseProps) {
 
         if (error) setError(error.message);
 
-        const newExpense = {
-          nome: data.nome,
-          valor: data.valor,
-        };
-        setExpenseArray([...expenseArray, newExpense]);
+        setExpenseArray([...expenseArray, data]);
         alert("Despesa Cadastrada com Sucesso!");
         name.setValue("");
         expense.setValue("");
@@ -72,6 +74,7 @@ export default function Despesas(expenditure: ExpenseProps) {
       }
     } else {
       alert("Necessário preencher os campos corretamente");
+      setLoading(false);
     }
   }
 
@@ -106,7 +109,7 @@ export default function Despesas(expenditure: ExpenseProps) {
     setExpenseArray(expensedPlan);
     setExpenseEdit(null);
     setLoading(false);
-    showHome();
+    location.reload();
   }
 
   function handleDelete(expenseId) {
@@ -166,14 +169,16 @@ export default function Despesas(expenditure: ExpenseProps) {
                   <tr>
                     <th>Nome</th>
                     <th>Despesa</th>
-                    <th></th>
+                    <th style={{ textAlign: "right" }}>
+                      Total: R$ {expenseTotal.toString().replace(".", ",")}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {expenseArray.map((expense) => (
                     <tr key={expense.id}>
                       <td>{expense.nome}</td>
-                      <td>{expense.valor}</td>
+                      <td>R$ {expense.valor.toString().replace(".", ",")}</td>
                       <td>
                         <button onClick={() => handleEdit(expense)}>
                           <Image
