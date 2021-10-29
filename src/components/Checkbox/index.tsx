@@ -12,12 +12,12 @@ const Checkbox = ({ itemsCheck, value, setValue }) => {
   return (
     <>
       {itemsCheck.map((item) => (
-        <label key={item} className={styles.label}>
-          {item}
+        <label key={item.id} className={styles.label}>
+          {item.nome}
           <input
             type="Checkbox"
-            value={item}
-            checked={value.includes(item)}
+            value={String(item.id)}
+            checked={value.includes(String(item.id))}
             onChange={handleChange}
           />
         </label>

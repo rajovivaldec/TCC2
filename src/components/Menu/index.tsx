@@ -16,7 +16,7 @@ export const Menu = ({ toggleMenu, setToggleMenu }) => {
 
   function handleLogout() {
     supabase.auth.signOut();
-    Router.push("/login");
+    Router.push("/");
   }
 
   useEffect(() => {

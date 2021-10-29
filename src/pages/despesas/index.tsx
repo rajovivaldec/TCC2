@@ -13,18 +13,18 @@ import { useAuth } from "../../contexts/AuthContext";
 type Expense = {
   id?: number;
   nome: string;
-  valor: number | string;
+  valor: number;
 };
 
 type ExpenseProps = {
-  data: Expense[];
+  expenditure: Expense[];
 };
 
-export default function Despesas(expenditure) {
+export default function Despesas({ expenditure }: ExpenseProps) {
   const name = useForm();
   const expense = useForm();
   const { user } = useAuth();
-  const [expenseArray, setExpenseArray] = useState(expenditure.data);
+  const [expenseArray, setExpenseArray] = useState(expenditure || []);
   const [expenseEdit, setExpenseEdit] = useState(null);
   const [expenseDelete, setExpenseDelete] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -103,7 +103,7 @@ export default function Despesas(expenditure) {
       (item) => item.id === expenseEdit.id
     );
     expensedPlan[planIndex].nome = name.value;
-    expensedPlan[planIndex].valor = expense.value;
+    expensedPlan[planIndex].valor = Number(expense.value);
 
     alert("Despesa atualizada!");
     setExpenseArray(expensedPlan);
@@ -300,13 +300,13 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 
-  let { data } = await supabase
+  let { data: expenditure } = await supabase
     .from("despesas")
     .select("id,nome,valor")
     .filter("excluido", "eq", "false")
     .eq("user_id", user.id);
 
   return {
-    props: { data },
+    props: { expenditure },
   };
 };

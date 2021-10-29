@@ -57,7 +57,7 @@ export default function Aulas({ classes }) {
   const classDate = useForm();
   const description = useForm();
   const [resources, setResources] = useState("");
-  const [classesArray, setClassesArray] = useState(classes);
+  const [classesArray, setClassesArray] = useState(classes || []);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);

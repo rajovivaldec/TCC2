@@ -19,17 +19,17 @@ type Plan = {
 };
 
 type PlansProps = {
-  data: Plan[];
+  plans: Plan[];
 };
 
-export default function Planos(plans: PlansProps) {
+export default function Planos({ plans }: PlansProps) {
   const name = useForm();
   const price = useForm();
   const [selectPeriod, setSelectPeriod] = useState("");
   const { user } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [plansArray, setPlansArray] = useState(plans.data);
+  const [plansArray, setPlansArray] = useState(plans || []);
   const [planEdit, setPlanEdit] = useState(null);
   const [planDeleteId, setPlanDeleteId] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -75,10 +75,10 @@ export default function Planos(plans: PlansProps) {
         if (error) setError(error.message);
 
         setPlansArray([...plansArray, data]);
-        alert("Plano Cadastrado com Sucesso!");
         name.setValue("");
         price.setValue("");
         setSelectPeriod("");
+        alert("Plano Cadastrado com Sucesso!");
         setLoading(false);
         location.reload();
       }
@@ -185,7 +185,11 @@ export default function Planos(plans: PlansProps) {
                     <tr key={plan.id}>
                       <td>{plan.nome}</td>
                       <td>R$ {plan.preco.toString().replace(".", ",")}</td>
-                      <td>{plan.periodo}</td>
+                      <td>
+                        {plan.periodo
+                          .replace("2", "Mensal")
+                          .replace("1", "Semanal")}
+                      </td>
                       <td>
                         <button onClick={() => handleEdit(plan)}>
                           <Image
@@ -324,6 +328,6 @@ export const getServerSideProps = async (ctx) => {
     .eq("user_id", user.id);
 
   return {
-    props: { data: plans },
+    props: { plans },
   };
 };
