@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
 
-export const InputSearch = ({ onSubmit, placeHolder }, props) => {
+export const InputSearch = ({ onSubmit, placeHolder, ...props }) => {
   return (
     <form className={styles.container} onSubmit={onSubmit}>
       <input type="text" {...props} placeholder={placeHolder} />

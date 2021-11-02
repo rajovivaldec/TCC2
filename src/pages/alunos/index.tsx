@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useMemo, useState } from "react";
 import { supabase } from "../../lib/initSupabase";
 import { BgWhite } from "../../components/BgWhite";
 import { Button } from "../../components/Button";
@@ -10,6 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
+import { toast } from "react-toastify";
 import styles from "./styles.module.scss";
 
 type Plans = {
@@ -68,6 +69,8 @@ export default function Alunos({
   );
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
+  const [selectClassesOld, setSelectClassesOld] = useState([]);
+  const [search, setSearch] = useState("");
 
   const {
     homeVisible,
@@ -139,15 +142,15 @@ export default function Alunos({
 
           if (aluno_aula_erro) setError(aluno_aula_erro.message);
 
+          toast.success("Aluno cadastrado com Sucesso!");
           setStudentsArray([...studentsArray, aluno]);
           clearInputs();
           setLoading(false);
-          alert("Aluno cadastrado com Sucesso!");
           location.reload();
         }
       }
     } else {
-      alert("Necessário preencher todos os campos corretamente!");
+      toast.error("Necessário preencher todos os campos corretamente!");
       setLoading(false);
     }
   }
@@ -163,7 +166,6 @@ export default function Alunos({
   }
 
   async function handleEdit(student: Student) {
-    showEdit();
     setStudentEdit(student);
     setStudentDeleteId(student.id);
     name.setValue(student.nome);
@@ -176,13 +178,23 @@ export default function Alunos({
     cpf.setValue(student.cpf);
 
     const selectClasses = await selectStudentClasses(student.id);
-    const selectClassesToString = selectClasses.map(
-      ({ aula_id }) => aula_id && aula_id.toString()
+    const selectClassesToString = selectClasses.map(({ aula_id }) =>
+      aula_id.toString()
     );
     setClasses(selectClassesToString);
+    setSelectClassesOld(selectClasses.map((item) => item.aula_id));
+    showEdit();
   }
 
   async function updateStudent() {
+    const selectCurrentClasses = classes.map((item) => {
+      return {
+        aula_id: Number(item),
+        aluno_id: Number(studentEdit.id),
+        user_id: user.id,
+      };
+    });
+
     const { data, error } = await supabase
       .from("alunos")
       .update({
@@ -200,29 +212,24 @@ export default function Alunos({
 
     if (error) setError(error.message);
 
-    const auxClasses = [...classes].map((item) => Number(item));
-
-    // const updatedClassesArray = auxClasses.map((item) => {
-    //   return {
-    //     aula_id: Number(item),
-    //   };
-    // });
-
     const { data: deleteClass } = await supabase
       .from("alunos_aulas")
       .delete()
       .eq("aluno_id", Number(studentEdit.id))
-      .eq("user_id", user.id);
+      .eq("user_id", user.id)
+      .in("aula_id", selectClassesOld);
 
-    const { data: aula, error: updatedClassError } = await supabase
-      .from("alunos_aulas")
-      .insert(auxClasses)
-      .eq("aluno_id", Number(studentEdit.id))
-      .eq("user_id", user.id);
+    if (deleteClass) {
+      const { data: aulaAtual, error: updatedClassError } = await supabase
+        .from("alunos_aulas")
+        .insert(selectCurrentClasses)
+        .eq("aluno_id", Number(studentEdit.id))
+        .eq("user_id", user.id);
+    }
 
+    toast.success("Plano atualizado!");
     setStudentEdit(null);
     setLoading(false);
-    alert("Plano atualizado!");
     location.reload();
   }
 
@@ -249,6 +256,7 @@ export default function Alunos({
         .delete()
         .eq("aluno_id", studentDeleteId);
     }
+    toast.success("Aluno Deletado!");
     setStudentsArray(deletedStudent);
     setShowModal(false);
     setStudentDeleteId(null);
@@ -276,8 +284,17 @@ export default function Alunos({
     if (e.target.id === "modal") setShowModal(false);
   }
 
+  const studentsFiltered = useMemo(() => {
+    const lowerSearch = search.toLocaleLowerCase();
+    return studentsArray.filter((student) =>
+      student.nome.toLocaleLowerCase().includes(lowerSearch)
+    );
+  }, [studentsArray, search]);
+
   return (
     <>
+      {error && toast.error(error)}
+
       {homeVisible ? (
         <section className={styles.container}>
           <h1>Alunos</h1>
@@ -285,14 +302,14 @@ export default function Alunos({
             <header>
               <Button onClick={registerNewPlanBtn}>Cadastrar Novo Aluno</Button>
               <InputSearch
-                onSubmit={() => console.log("test")}
                 placeHolder="Buscar Alunos..."
+                onSubmit={(e) => e.preventDefault()}
+                value={search}
+                onChange={({ target }) => setSearch(target.value)}
               />
             </header>
 
             <hr />
-
-            {error && <p>{error}</p>}
 
             <div className="tableContainer">
               <table className="table">
@@ -308,7 +325,7 @@ export default function Alunos({
                   </tr>
                 </thead>
                 <tbody>
-                  {studentsArray.map((student) => (
+                  {studentsFiltered.map((student) => (
                     <tr key={student.id}>
                       <td>{student.nome}</td>
                       <td>{student.email}</td>

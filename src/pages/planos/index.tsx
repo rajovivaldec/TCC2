@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import Image from "next/image";
 import { supabase } from "../../lib/initSupabase";
 import { BgWhite } from "../../components/BgWhite";
@@ -9,6 +9,7 @@ import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
 import { Select } from "../../components/Select";
 import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 import styles from "./styles.module.scss";
 
 type Plan = {
@@ -33,6 +34,7 @@ export default function Planos({ plans }: PlansProps) {
   const [planEdit, setPlanEdit] = useState(null);
   const [planDeleteId, setPlanDeleteId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [search, setSearch] = useState("");
 
   const {
     homeVisible,
@@ -78,12 +80,12 @@ export default function Planos({ plans }: PlansProps) {
         name.setValue("");
         price.setValue("");
         setSelectPeriod("");
-        alert("Plano Cadastrado com Sucesso!");
+        toast.success("Plano Cadastrado com Sucesso!");
         setLoading(false);
         location.reload();
       }
     } else {
-      alert("Necessário preencher corretamente todos os campos!");
+      toast.error("Necessário preencher corretamente todos os campos!");
       setLoading(false);
     }
   }
@@ -116,7 +118,7 @@ export default function Planos({ plans }: PlansProps) {
     updatedPlan[planIndex].preco = price.value;
     updatedPlan[planIndex].periodo = selectPeriod;
 
-    alert("Plano atualizado!");
+    toast.success("Plano atualizado!");
     setPlansArray(updatedPlan);
     setPlanEdit(null);
     setLoading(false);
@@ -140,6 +142,7 @@ export default function Planos({ plans }: PlansProps) {
     setPlansArray(deletedPlan);
     setShowModal(false);
     setPlanDeleteId(null);
+    toast.success("Plano Deletado!");
     showHome();
   }
 
@@ -154,8 +157,17 @@ export default function Planos({ plans }: PlansProps) {
     if (e.target.id === "modal") setShowModal(false);
   }
 
+  const plansArrayFiltered = useMemo(() => {
+    const lowerSearch = search.toLocaleLowerCase();
+    return plansArray.filter((plan) =>
+      plan.nome.toLocaleLowerCase().includes(lowerSearch)
+    );
+  }, [plansArray, search]);
+
   return (
     <>
+      {error && toast.error(error)}
+
       {homeVisible ? (
         <section className={styles.container}>
           <h1>Planos</h1>
@@ -163,8 +175,10 @@ export default function Planos({ plans }: PlansProps) {
             <header>
               <Button onClick={registerNewPlanBtn}>Cadastrar Novo Plano</Button>
               <InputSearch
-                onSubmit={() => console.log("test")}
+                onSubmit={(e) => e.preventDefault()}
                 placeHolder="Buscar Planos..."
+                value={search}
+                onChange={({ target }) => setSearch(target.value)}
               />
             </header>
 
@@ -181,7 +195,7 @@ export default function Planos({ plans }: PlansProps) {
                   </tr>
                 </thead>
                 <tbody>
-                  {plansArray.map((plan) => (
+                  {plansArrayFiltered.map((plan) => (
                     <tr key={plan.id}>
                       <td>{plan.nome}</td>
                       <td>R$ {plan.preco.toString().replace(".", ",")}</td>
@@ -229,8 +243,6 @@ export default function Planos({ plans }: PlansProps) {
             </button>
 
             <hr />
-
-            {error && <p>{error}</p>}
 
             <div className={styles.registerWrapper}>
               <div>

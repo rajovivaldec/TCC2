@@ -84,6 +84,10 @@ a {
   font-size: 1rem;
 }
 
+.Toastify {
+  position: absolute;
+}
+
 // Table
 .tableContainer {
   border-radius: 2px 2px 0 0;
@@ -174,8 +178,7 @@ a {
   text-align: center;
   display: flex;
   justify-content: center;
-  align-items: center; 
-  
+  align-items: center;
 
   .modalWrapper {
     max-width: 480px;

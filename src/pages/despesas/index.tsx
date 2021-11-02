@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { BgWhite } from "../../components/BgWhite";
 import { useVisibleContent } from "../../hooks/useVisibleContent";
@@ -7,8 +7,9 @@ import { Button } from "../../components/Button";
 import { InputSearch } from "../../components/InputSearch";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
-import styles from "./styles.module.scss";
 import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
+import styles from "./styles.module.scss";
 
 type Expense = {
   id?: number;
@@ -31,6 +32,7 @@ export default function Despesas({ expenditure }: ExpenseProps) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState("");
   const [expenseTotal, setExpenseTotal] = useState(0);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const total = expenseArray.reduce((acc, item) => acc + item.valor, 0);
@@ -66,14 +68,14 @@ export default function Despesas({ expenditure }: ExpenseProps) {
         if (error) setError(error.message);
 
         setExpenseArray([...expenseArray, data]);
-        alert("Despesa Cadastrada com Sucesso!");
+        toast.success("Despesa Cadastrada com Sucesso!");
         name.setValue("");
         expense.setValue("");
         setLoading(false);
         location.reload();
       }
     } else {
-      alert("Necessário preencher os campos corretamente");
+      toast.error("Necessário preencher os campos corretamente");
       setLoading(false);
     }
   }
@@ -105,7 +107,7 @@ export default function Despesas({ expenditure }: ExpenseProps) {
     expensedPlan[planIndex].nome = name.value;
     expensedPlan[planIndex].valor = Number(expense.value);
 
-    alert("Despesa atualizada!");
+    toast.success("Despesa Atualizada!");
     setExpenseArray(expensedPlan);
     setExpenseEdit(null);
     setLoading(false);
@@ -131,6 +133,7 @@ export default function Despesas({ expenditure }: ExpenseProps) {
     setExpenseArray(deletedExpense);
     setShowModal(false);
     setExpenseDelete(null);
+    toast.success("Despesa Excluída Sucesso!");
     showHome();
   }
 
@@ -145,8 +148,17 @@ export default function Despesas({ expenditure }: ExpenseProps) {
     if (e.target.id === "modal") setShowModal(false);
   }
 
+  const expenseFiltered = useMemo(() => {
+    const lowerSearch = search.toLocaleLowerCase();
+    return expenseArray.filter((expense) =>
+      expense.nome.toLocaleLowerCase().includes(lowerSearch)
+    );
+  }, [expenseArray, search]);
+
   return (
     <>
+      {error && toast.error(error)}
+
       {homeVisible ? (
         <section className={styles.container}>
           <h1>Despesas</h1>
@@ -156,8 +168,10 @@ export default function Despesas({ expenditure }: ExpenseProps) {
                 Cadastrar Despesas Fixas
               </Button>
               <InputSearch
-                onSubmit={() => console.log("test")}
                 placeHolder="Buscar Despesas.."
+                onSubmit={(e) => e.preventDefault()}
+                value={search}
+                onChange={({ target }) => setSearch(target.value)}
               />
             </header>
 
@@ -175,7 +189,7 @@ export default function Despesas({ expenditure }: ExpenseProps) {
                   </tr>
                 </thead>
                 <tbody>
-                  {expenseArray.map((expense) => (
+                  {expenseFiltered.map((expense) => (
                     <tr key={expense.id}>
                       <td>{expense.nome}</td>
                       <td>R$ {expense.valor.toString().replace(".", ",")}</td>
@@ -218,8 +232,6 @@ export default function Despesas({ expenditure }: ExpenseProps) {
             </button>
 
             <hr />
-
-            {error && <p>{error}</p>}
 
             <div className={styles.registerWrapper}>
               <div>

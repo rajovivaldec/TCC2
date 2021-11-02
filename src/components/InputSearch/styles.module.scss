@@ -5,6 +5,18 @@
     background-color: var(--gray-200);
     border: none;
     border-radius: 4px 0 0 4px;
+    outline: none;
+
+    &:focus,
+    &:hover {
+      background-color: white;
+      box-shadow: 0 0 0 3px var(--yellow-main);
+    }
+  }
+
+  input:hover + button,
+  input:focus + button {
+    box-shadow: 0 0 0 3px var(--yellow-main);
   }
 
   button {
@@ -18,7 +30,6 @@
     align-items: center;
     position: relative;
     top: 5px;
-
   }
 }
 

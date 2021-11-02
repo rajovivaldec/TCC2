@@ -8,8 +8,9 @@ import { useVisibleContent } from "../../hooks/useVisibleContent";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
 import "react-quill/dist/quill.snow.css";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 import styles from "./styles.module.scss";
 
 type Resource = {
@@ -66,6 +67,7 @@ export default function Aulas({ classes }) {
   const [resourcesArray, setResourcesArray] = useState<Resource[] | null>([]);
   const [editContent, setEditContent] = useState(null);
   const [classDeleteId, setClassDeleteId] = useState(null);
+  const [search, setSearch] = useState("");
 
   const {
     homeVisible,
@@ -90,11 +92,11 @@ export default function Aulas({ classes }) {
 
       setCurrentClass(data);
       setLoading(false);
-      alert("Aula Cadastrada com Sucesso!");
+      toast.success("Aula Cadastrada com Sucesso!");
       location.reload();
       showRegister();
     } else {
-      alert("Necessário preencher o campo corretamente");
+      toast.error("Necessário preencher o campo corretamente");
       setLoading(false);
     }
   }
@@ -123,6 +125,7 @@ export default function Aulas({ classes }) {
     setClassesArray(deleteClass);
     setShowModal(false);
     setClassDeleteId(null);
+    toast.success("Aula Deletada!");
     showHome();
   }
 
@@ -173,7 +176,7 @@ export default function Aulas({ classes }) {
         setShowModalAddContent(false);
       }
     } else {
-      alert("Necessário preencher os campos obrigatórios!");
+      toast.error("Necessário preencher os campos obrigatórios!");
       setLoading(false);
     }
   }
@@ -215,7 +218,7 @@ export default function Aulas({ classes }) {
     );
     updatedClassName[classNameIndex].nome = name.value;
 
-    alert("Plano atualizado!");
+    toast.success("Aula Atualizada!");
     setClassesArray(updatedClassName);
     setLoading(false);
   }
@@ -272,8 +275,17 @@ export default function Aulas({ classes }) {
     setCurrentClass(null);
   }
 
+  const classFiltered = useMemo(() => {
+    const lowerSearch = search.toLocaleLowerCase();
+    return classesArray.filter((classe) =>
+      classe.nome.toLocaleLowerCase().includes(lowerSearch)
+    );
+  }, [classesArray, search]);
+
   return (
     <>
+      {error && toast.error(error)}
+
       {homeVisible ? (
         <section className={styles.container}>
           <h1>Aulas</h1>
@@ -281,8 +293,10 @@ export default function Aulas({ classes }) {
             <header>
               <Button onClick={handleRegisterClass}>Cadastrar Nova Aula</Button>
               <InputSearch
-                onSubmit={() => console.log("test")}
                 placeHolder="Buscar Aulas..."
+                onSubmit={(e) => e.preventDefault()}
+                value={search}
+                onChange={({ target }) => setSearch(target.value)}
               />
             </header>
 
@@ -297,7 +311,7 @@ export default function Aulas({ classes }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {classesArray.map((classe) => (
+                  {classFiltered.map((classe) => (
                     <tr key={classe.id}>
                       <td>{classe.nome}</td>
                       <td>
@@ -328,7 +342,6 @@ export default function Aulas({ classes }) {
       ) : registerVisible || editVisible ? (
         <section className={styles.container}>
           <h1>Cadastrar Aula</h1>
-          {error && <p>{error}</p>}
           <BgWhite>
             <button onClick={handleBackBtn} className="btnBack">
               <Image

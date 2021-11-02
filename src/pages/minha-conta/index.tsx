@@ -5,8 +5,9 @@ import { Button } from "../../components/Button";
 import { supabase } from "../../lib/initSupabase";
 import { Input } from "../../components/Input";
 import { useForm } from "../../hooks/useForm";
-import styles from "./styles.module.scss";
 import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
+import styles from "./styles.module.scss";
 
 export default function MinhaConta() {
   const name = useForm();
@@ -28,9 +29,10 @@ export default function MinhaConta() {
       if (error) setError(error.message);
 
       setLoading(false);
-      alert("Dados alterados com Sucesso!");
+      toast.success("Dados Alterados com Sucesso!");
     } else {
-      alert("Necessário preencher os campos corretamente");
+      toast.error("Preencha Todos os dados Corretamente!");
+      setLoading(false);
     }
 
     upsertName();
@@ -100,12 +102,11 @@ export default function MinhaConta() {
 
   return (
     <>
+      {error && toast.error(error)}
+
       <section className={styles.container}>
         <h1>Minha Conta</h1>
         <BgWhite>
-          {error && (
-            <p style={{ marginBottom: "1.2rem", color: "red" }}>{error}</p>
-          )}
           <form onSubmit={handleSubmit}>
             <div className={styles.accountWrapper}>
               <div>
