@@ -1,4 +1,42 @@
+import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { supabase } from "../lib/initSupabase";
+
 export const useChart = () => {
+  const [genre, setGenre] = useState([]);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    async function fetchGenres() {
+      if (user) {
+        const { count: totalFemale } = await supabase
+          .from("alunos")
+          .select("id, genero", { count: "exact" })
+          .filter("excluido", "eq", "false")
+          .filter("genero", "eq", "1")
+          .eq("user_id", user.id);
+
+        const { count: male } = await supabase
+          .from("alunos")
+          .select("id, genero", { count: "exact" })
+          .filter("excluido", "eq", "false")
+          .filter("genero", "eq", "2")
+          .eq("user_id", user.id);
+
+        const { count: others } = await supabase
+          .from("alunos")
+          .select("id, genero", { count: "exact" })
+          .filter("excluido", "eq", "false")
+          .filter("genero", "eq", "3")
+          .eq("user_id", user.id);
+
+        setGenre([...genre, totalFemale, male, others]);
+      }
+    }
+    fetchGenres();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   const dataLine = {
     labels: [
       "Jan",
@@ -54,7 +92,7 @@ export const useChart = () => {
     labels: ["Feminino", "Masculino", "Outro"],
     datasets: [
       {
-        data: [40, 55, 5],
+        data: genre,
         backgroundColor: ["#F3F00D", "#0f0f0e", "#CCCA00"],
       },
     ],

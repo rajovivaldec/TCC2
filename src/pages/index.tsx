@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { GetServerSideProps } from "next";
 import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,8 +11,16 @@ import { BgWhite } from "../components/BgWhite";
 import { useChart } from "../hooks/useChart";
 import { Button } from "../components/Button";
 import styles from "../styles/home.module.scss";
+import { toast } from "react-toastify";
 
-export default function Dashboard() {
+export default function Dashboard({
+  countStudents,
+  countClasses,
+  countPlans,
+  nameClasses,
+  studentsPlans,
+  expenditure,
+}) {
   const [showResetPass, setShowResetPass] = useState(false);
   const [messageRedirect, setMessageRedirect] = useState(false);
   const { user } = useAuth();
@@ -23,6 +32,23 @@ export default function Dashboard() {
     dataBar,
     optionsBar,
   } = useChart();
+  const [initialRange, setInitialRange] = useState(0);
+  const [finalRange, setFinalRange] = useState(6);
+  const [lastStudents, setLastStudents] = useState([]);
+  const [loadingLastStudents, setLoadingLastStudents] = useState(false);
+  const [totalEstimatedRevenue, setTotalestimatedRevenue] = useState(0);
+
+  function estimatedRevenue() {
+    const totalPlans = studentsPlans.map((item) =>
+      item.planos.periodo === "1" ? item.planos.preco * 4 : item.planos.preco
+    );
+    const totalRevenue = totalPlans.reduce((acc, curr) => acc + curr, 0);
+    const totalExpense = expenditure.reduce((acc, item) => acc + item.valor, 0);
+    const estimatedRevenue = totalRevenue - totalExpense;
+    setTotalestimatedRevenue(estimatedRevenue);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useMemo(() => estimatedRevenue(), [studentsPlans]);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
@@ -41,6 +67,45 @@ export default function Dashboard() {
       authListener.unsubscribe();
     };
   }, []);
+
+  function nextPage() {
+    setInitialRange(initialRange + 7);
+    setFinalRange(finalRange + 6);
+  }
+
+  function backPage() {
+    setInitialRange(initialRange - 7);
+    setFinalRange(finalRange - 6);
+
+    if (initialRange <= 0) {
+      setInitialRange(0);
+      setFinalRange(6);
+    }
+  }
+
+  useEffect(() => {
+    async function fetchStudents() {
+      setLoadingLastStudents(true);
+      if (user) {
+        const { data, error } = await supabase
+          .from("alunos")
+          .select(
+            `id, nome, email, genero,
+          planos (nome)`
+          )
+          .order("id", { ascending: false })
+          .range(initialRange, finalRange)
+          .filter("excluido", "eq", "false")
+          .eq("user_id", user.id);
+
+        if (error) toast.error(error.message);
+
+        setLastStudents(data);
+        setLoadingLastStudents(false);
+      }
+    }
+    fetchStudents();
+  }, [user, initialRange, finalRange]);
 
   if (!user) {
     return (
@@ -130,7 +195,12 @@ export default function Dashboard() {
             <Link href="/despesas">
               <a className={styles.statisticsWrapper}>
                 <div>
-                  <h1>R$ 7.892,00</h1>
+                  <h1>
+                    R${" "}
+                    {String(totalEstimatedRevenue.toFixed(2))
+                      .padStart(2, "0")
+                      .replace(".", ",")}
+                  </h1>
                   <p>Receita Estimada/mês</p>
                 </div>
                 <Image
@@ -144,7 +214,7 @@ export default function Dashboard() {
             <Link href="/alunos">
               <a className={styles.statisticsWrapper}>
                 <div>
-                  <h1>247</h1>
+                  <h1>{String(countStudents).padStart(2, "0")}</h1>
                   <p>Alunos</p>
                 </div>
                 <Image
@@ -158,7 +228,7 @@ export default function Dashboard() {
             <Link href="/aulas">
               <a className={styles.statisticsWrapper}>
                 <div>
-                  <h1>08</h1>
+                  <h1>{String(countClasses).padStart(2, "0")}</h1>
                   <p>Aulas</p>
                 </div>
                 <Image
@@ -172,7 +242,7 @@ export default function Dashboard() {
             <Link href="/planos">
               <a className={styles.statisticsWrapper}>
                 <div>
-                  <h1>05</h1>
+                  <h1>{String(countPlans).padStart(2, "0")}</h1>
                   <p>Planos</p>
                 </div>
                 <Image
@@ -221,10 +291,20 @@ export default function Dashboard() {
                 <div className={styles.headerFirstTable}>
                   <h2>Últimos Alunos Cadastrados</h2>
                   <div>
-                    <button className={styles.next} disabled>
+                    <button
+                      className={styles.next}
+                      onClick={backPage}
+                      disabled={initialRange <= 0}
+                    >
                       {"<"} Anterior
                     </button>
-                    <button className={styles.prev}>Próxima {">"}</button>
+                    <button
+                      className={styles.prev}
+                      onClick={nextPage}
+                      disabled={finalRange >= lastStudents.length}
+                    >
+                      Próxima {">"}
+                    </button>
                   </div>
                 </div>
                 <hr />
@@ -238,48 +318,26 @@ export default function Dashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>João Fernando Brígido</td>
-                      <td>joao@hotmail.com</td>
-                      <td>Masculino</td>
-                      <td>Mensal</td>
-                    </tr>
-                    <tr>
-                      <td>João Fernando Brígido</td>
-                      <td>joao@hotmail.com</td>
-                      <td>Masculino</td>
-                      <td>Mensal</td>
-                    </tr>
-                    <tr>
-                      <td>João Fernando Brígido</td>
-                      <td>joao@hotmail.com</td>
-                      <td>Masculino</td>
-                      <td>Mensal</td>
-                    </tr>
-                    <tr>
-                      <td>João Fernando Brígido</td>
-                      <td>joao@hotmail.com</td>
-                      <td>Masculino</td>
-                      <td>Mensal</td>
-                    </tr>
-                    <tr>
-                      <td>João Fernando Brígido</td>
-                      <td>joao@hotmail.com</td>
-                      <td>Masculino</td>
-                      <td>Mensal</td>
-                    </tr>
-                    <tr>
-                      <td>João Fernando Brígido</td>
-                      <td>joao@hotmail.com</td>
-                      <td>Masculino</td>
-                      <td>Mensal</td>
-                    </tr>
-                    <tr>
-                      <td>João Fernando Brígido</td>
-                      <td>joao@hotmail.com</td>
-                      <td>Masculino</td>
-                      <td>Mensal</td>
-                    </tr>
+                    {!loadingLastStudents ? (
+                      !!lastStudents.length &&
+                      lastStudents.map((student) => (
+                        <tr key={student.id}>
+                          <td>{student.nome}</td>
+                          <td>{student.email}</td>
+                          <td>
+                            {String(student.genero)
+                              .replace("1", "Feminino")
+                              .replace("2", "Masculino")
+                              .replace("3", "Outro")}
+                          </td>
+                          <td>{student.planos.nome}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td>Carregando...</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </BgWhite>
@@ -289,48 +347,12 @@ export default function Dashboard() {
                 <div className={styles.tableSecondWrapper}>
                   <table className={styles.tableSecond}>
                     <tbody>
-                      <tr>
-                        <td>Inglês - 2° ano</td>
-                      </tr>
-                      <tr>
-                        <td>Português - 1° ano</td>
-                      </tr>
-                      <tr>
-                        <td>Matemática Aplicada</td>
-                      </tr>
-                      <tr>
-                        <td>Teoria dos Grafos</td>
-                      </tr>
-                      <tr>
-                        <td>Compiladores</td>
-                      </tr>
-                      <tr>
-                        <td>UI/UX Design</td>
-                      </tr>
-                      <tr>
-                        <td>Linguagem de Programação ll</td>
-                      </tr>
-                      <tr>
-                        <td>Inglês - 2° ano</td>
-                      </tr>
-                      <tr>
-                        <td>Português - 1° ano</td>
-                      </tr>
-                      <tr>
-                        <td>Matemática Aplicada</td>
-                      </tr>
-                      <tr>
-                        <td>Teoria dos Grafos</td>
-                      </tr>
-                      <tr>
-                        <td>Compiladores</td>
-                      </tr>
-                      <tr>
-                        <td>UI/UX Design</td>
-                      </tr>
-                      <tr>
-                        <td>Linguagem de Programação ll</td>
-                      </tr>
+                      {!!nameClasses.length &&
+                        nameClasses.map((classe) => (
+                          <tr key={classe.id}>
+                            <td>{classe.nome}</td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
@@ -343,19 +365,51 @@ export default function Dashboard() {
   );
 }
 
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//   const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
 
-//   if (!user) {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//         permanent: false,
-//       },
-//     };
-//   }
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
-//   return {
-//     props: {},
-//   };
-// };
+  const { data: studentsPlans, count: countStudents } = await supabase
+    .from("alunos")
+    .select("id, planos (preco, periodo)", { count: "exact" })
+    .filter("excluido", "eq", "false")
+    .eq("user_id", user.id);
+
+  const { data: nameClasses, count: countClasses } = await supabase
+    .from("aulas")
+    .select("id, nome", { count: "exact" })
+    .order("id", { ascending: false })
+    .filter("excluido", "eq", "false")
+    .eq("user_id", user.id);
+
+  const { count: countPlans } = await supabase
+    .from("planos")
+    .select("*", { count: "exact" })
+    .filter("excluido", "eq", "false")
+    .eq("user_id", user.id);
+
+  let { data: expenditure } = await supabase
+    .from("despesas")
+    .select("valor")
+    .filter("excluido", "eq", "false")
+    .eq("user_id", user.id);
+
+  return {
+    props: {
+      countStudents,
+      countClasses,
+      countPlans,
+      nameClasses,
+      studentsPlans,
+      expenditure,
+    },
+  };
+};

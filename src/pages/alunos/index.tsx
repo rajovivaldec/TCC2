@@ -364,8 +364,140 @@ export default function Alunos({
           </BgWhite>
         </section>
       ) : registerVisible || editVisible ? (
-        <section className={styles.container}>
-          <h1>Cadastrar Aluno</h1>
+        availableClasses.length && plans.length ? (
+          <section className={styles.container}>
+            <h1>Cadastrar Aluno</h1>
+            <BgWhite>
+              <button onClick={showHome} className="btnBack">
+                <Image
+                  width="40"
+                  height="26"
+                  src="/icons/setaVoltar.svg"
+                  alt="voltar"
+                />
+              </button>
+
+              <hr />
+
+              <div className={styles.registerWrapper}>
+                <div>
+                  <Input
+                    label="Nome"
+                    type="text"
+                    id="nome"
+                    placeholder="Insira seu nome completo"
+                    required
+                    {...name}
+                  />
+                </div>
+                <div>
+                  <Select
+                    label="Plano"
+                    value={selectPlans}
+                    setValue={setSelectPlans}
+                    options={plans}
+                    defaultValue="Selecione um plano"
+                    id="plano"
+                  />
+                </div>
+                <div>
+                  <Input
+                    label="E-mail"
+                    type="email"
+                    id="email"
+                    placeholder="Insira seu e-mail"
+                    required
+                    {...email}
+                  />
+                </div>
+                <div>
+                  <Select
+                    label="Gênero"
+                    value={selectGender}
+                    setValue={setSelectGender}
+                    options={genders}
+                    defaultValue="Selecione um gênero"
+                    id="genero"
+                  />
+                </div>
+                <div>
+                  <Input
+                    label="Celular"
+                    type="text"
+                    id="celular"
+                    placeholder="Insira seu celular"
+                    required
+                    phoneNumber
+                    {...phoneNumber}
+                  />
+                </div>
+                <div>
+                  <Input
+                    label="Idade"
+                    type="number"
+                    id="idade"
+                    placeholder="Insira sua idade"
+                    required
+                    {...age}
+                  />
+                </div>
+                <div>
+                  <Input
+                    label="Endereço"
+                    type="text"
+                    id="endereco"
+                    placeholder="Insira seu endereço"
+                    required
+                    {...address}
+                  />
+                </div>
+                <div>
+                  <Input
+                    label="CPF"
+                    type="text"
+                    id="cpf"
+                    placeholder="Insira seu CPF"
+                    required
+                    cpf
+                    {...cpf}
+                  />
+                </div>
+              </div>
+              <label className={styles.aulas}>Aulas</label>
+              <div className={styles.aulasWrapp}>
+                <Checkbox
+                  itemsCheck={availableClasses}
+                  value={classes}
+                  setValue={setClasses}
+                />
+              </div>
+              <div className={styles.btnRegister}>
+                {registerVisible ? (
+                  loading ? (
+                    <Button isLoading disabled>
+                      Cadastrando...
+                    </Button>
+                  ) : (
+                    <Button onClick={submitStudent}>Cadastrar</Button>
+                  )
+                ) : editVisible ? (
+                  loading ? (
+                    <Button isLoading disabled>
+                      Atualizando
+                    </Button>
+                  ) : (
+                    <div className="btnsEdit">
+                      <Button onClick={submitStudent}>Salvar</Button>
+                      <Button onClick={() => setShowModal(true)} black>
+                        Excluir
+                      </Button>
+                    </div>
+                  )
+                ) : null}
+              </div>
+            </BgWhite>
+          </section>
+        ) : (
           <BgWhite>
             <button onClick={showHome} className="btnBack">
               <Image
@@ -377,125 +509,12 @@ export default function Alunos({
             </button>
 
             <hr />
-
-            <div className={styles.registerWrapper}>
-              <div>
-                <Input
-                  label="Nome"
-                  type="text"
-                  id="nome"
-                  placeholder="Insira seu nome completo"
-                  required
-                  {...name}
-                />
-              </div>
-              <div>
-                <Select
-                  label="Plano"
-                  value={selectPlans}
-                  setValue={setSelectPlans}
-                  options={plans}
-                  defaultValue="Selecione um plano"
-                  id="plano"
-                />
-              </div>
-              <div>
-                <Input
-                  label="E-mail"
-                  type="email"
-                  id="email"
-                  placeholder="Insira seu e-mail"
-                  required
-                  {...email}
-                />
-              </div>
-              <div>
-                <Select
-                  label="Gênero"
-                  value={selectGender}
-                  setValue={setSelectGender}
-                  options={genders}
-                  defaultValue="Selecione um gênero"
-                  id="genero"
-                />
-              </div>
-              <div>
-                <Input
-                  label="Celular"
-                  type="text"
-                  id="celular"
-                  placeholder="Insira seu celular"
-                  required
-                  phoneNumber
-                  {...phoneNumber}
-                />
-              </div>
-              <div>
-                <Input
-                  label="Idade"
-                  type="number"
-                  id="idade"
-                  placeholder="Insira sua idade"
-                  required
-                  {...age}
-                />
-              </div>
-              <div>
-                <Input
-                  label="Endereço"
-                  type="text"
-                  id="endereco"
-                  placeholder="Insira seu endereço"
-                  required
-                  {...address}
-                />
-              </div>
-              <div>
-                <Input
-                  label="CPF"
-                  type="text"
-                  id="cpf"
-                  placeholder="Insira seu CPF"
-                  required
-                  cpf
-                  {...cpf}
-                />
-              </div>
-            </div>
-            <label className={styles.aulas}>Aulas</label>
-            <div className={styles.aulasWrapp}>
-              <Checkbox
-                itemsCheck={availableClasses}
-                value={classes}
-                setValue={setClasses}
-              />
-            </div>
-            <div className={styles.btnRegister}>
-              {registerVisible ? (
-                loading ? (
-                  <Button isLoading disabled>
-                    Cadastrando...
-                  </Button>
-                ) : (
-                  <Button onClick={submitStudent}>Cadastrar</Button>
-                )
-              ) : editVisible ? (
-                loading ? (
-                  <Button isLoading disabled>
-                    Atualizando
-                  </Button>
-                ) : (
-                  <div className="btnsEdit">
-                    <Button onClick={submitStudent}>Salvar</Button>
-                    <Button onClick={() => setShowModal(true)} black>
-                      Excluir
-                    </Button>
-                  </div>
-                )
-              ) : null}
-            </div>
+            <p style={{ color: "red" }}>
+              Necessário cadastrar pelo menos um Plano e uma Aula para cadastrar
+              um Aluno
+            </p>
           </BgWhite>
-        </section>
+        )
       ) : null}
 
       {showModal && (

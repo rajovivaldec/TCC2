@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Router from "next/router";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Input } from "../../components/Input";
 import { Loader } from "../../components/Loader";
 import { useForm } from "../../hooks/useForm";
@@ -41,13 +42,13 @@ export default function Login() {
       });
       if (signInError) setError(signInError.message);
 
-      setLoading(false);
-
       if (data) {
+        setLoading(false);
         Router.push("/");
       }
     } else {
-      alert("Necessário preencher os campos corretamente");
+      toast.error("Necessário preencher os campos corretamente");
+      setLoading(false);
     }
   }
 
@@ -72,7 +73,8 @@ export default function Login() {
         passwordSignUp.setValue("");
       }
     } else {
-      alert("Necessário preencher os campos corretamente");
+      toast.error("Necessário preencher os campos corretamente");
+      setLoading(false);
     }
   }
 
@@ -90,7 +92,8 @@ export default function Login() {
 
       setLoading(false);
     } else {
-      alert("Necessário preencher o campo corretamente");
+      toast.error("Necessário preencher os campos corretamente");
+      setLoading(false);
     }
   }
 
