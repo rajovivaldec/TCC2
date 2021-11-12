@@ -3,8 +3,10 @@ import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../lib/initSupabase";
 
 export const useChart = () => {
-  const [genre, setGenre] = useState([]);
   const { user } = useAuth();
+  const [genre, setGenre] = useState([]);
+  const [namePlans, setNamePlans] = useState([]);
+  const [studentsPlansData, setStudentsPlansData] = useState([]);
 
   useEffect(() => {
     async function fetchGenres() {
@@ -30,7 +32,23 @@ export const useChart = () => {
           .filter("genero", "eq", "3")
           .eq("user_id", user.id);
 
+        const { data: studentsPlans } = await supabase
+          .from("total_alunos_planos")
+          .select("*")
+          .eq("user_id", user.id);
+
+        const { data: plans } = await supabase
+          .from("planos")
+          .select(`id, nome`)
+          .filter("excluido", "eq", "false")
+          .order("id", { ascending: true })
+          .eq("user_id", user.id);
+
+        const namePlans = plans.map((plan) => plan.nome);
         setGenre([...genre, totalFemale, male, others]);
+        setNamePlans(namePlans);
+        const studentsPlansArray = studentsPlans.map((item) => item.count);
+        setStudentsPlansData(studentsPlansArray);
       }
     }
     fetchGenres();
@@ -111,18 +129,10 @@ export const useChart = () => {
   };
 
   const dataBar = {
-    labels: [
-      "Inglês - 2x semana",
-      "Inglês - 3x por semana",
-      "Letras - 1x por semana",
-      "TCC - 1x por mês",
-      "Gramática - 2x por semana",
-      "Português - 1x por semana",
-      "Letras - 1x por semana",
-    ],
+    labels: namePlans,
     datasets: [
       {
-        data: [40, 55, 15, 32, 12, 22, 40, 55, 15],
+        data: studentsPlansData,
         backgroundColor: ["#F3F00D", "#0f0f0e"],
         barThickness: 45,
       },

@@ -275,7 +275,7 @@ export default function Dashboard({
               </BgWhite>
             </div>
 
-            <div className={styles.lineChartContainer}>
+            {/* <div className={styles.lineChartContainer}>
               <BgWhite>
                 <h2>Receita/mês</h2>
                 <hr />
@@ -284,7 +284,7 @@ export default function Dashboard({
                   <Line data={dataLine} options={optionsLine} />
                 </div>
               </BgWhite>
-            </div>
+            </div> */}
 
             <div className={styles.tableContainer}>
               <BgWhite>
@@ -367,15 +367,6 @@ export default function Dashboard({
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
-
-  if (!user) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
 
   const { data: studentsPlans, count: countStudents } = await supabase
     .from("alunos")
