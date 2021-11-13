@@ -21,12 +21,10 @@ export default function Dashboard({
   studentsPlans,
   expenditure,
 }) {
+  const { user } = useAuth();
   const [showResetPass, setShowResetPass] = useState(false);
   const [messageRedirect, setMessageRedirect] = useState(false);
-  const { user } = useAuth();
   const {
-    dataLine,
-    optionsLine,
     dataDoughnut,
     optionsDoughnut,
     dataBar,
@@ -37,18 +35,26 @@ export default function Dashboard({
   const [lastStudents, setLastStudents] = useState([]);
   const [loadingLastStudents, setLoadingLastStudents] = useState(false);
   const [totalEstimatedRevenue, setTotalestimatedRevenue] = useState(0);
+  const [studentPlansArr, setstudentPlansArr] = useState(studentsPlans || []);
+  const [expenditureArr, setExpenditureArr] = useState(expenditure || []);
+  const [nameClassesArr, setNameClassesArr] = useState(nameClasses || []);
 
   function estimatedRevenue() {
-    const totalPlans = studentsPlans.map((item) =>
-      item.planos.periodo === "1" ? item.planos.preco * 4 : item.planos.preco
-    );
-    const totalRevenue = totalPlans.reduce((acc, curr) => acc + curr, 0);
-    const totalExpense = expenditure.reduce((acc, item) => acc + item.valor, 0);
-    const estimatedRevenue = totalRevenue - totalExpense;
-    setTotalestimatedRevenue(estimatedRevenue);
+    if (user) {
+      const totalPlans = studentPlansArr.map((item) =>
+        item.planos.periodo === "1" ? item.planos.preco * 4 : item.planos.preco
+      );
+      const totalRevenue = totalPlans.reduce((acc, curr) => acc + curr, 0);
+      const totalExpense = expenditureArr.reduce(
+        (acc, item) => acc + item.valor,
+        0
+      );
+      const estimatedRevenue = totalRevenue - totalExpense;
+      setTotalestimatedRevenue(estimatedRevenue);
+    }
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useMemo(() => estimatedRevenue(), [studentsPlans]);
+  useEffect(() => estimatedRevenue(), [studentsPlans, user]);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
@@ -106,6 +112,14 @@ export default function Dashboard({
     }
     fetchStudents();
   }, [user, initialRange, finalRange]);
+
+  if (
+    countStudents === undefined ||
+    countClasses === undefined ||
+    countPlans === undefined
+  ) {
+    location.reload();
+  }
 
   if (!user) {
     return (
@@ -347,8 +361,8 @@ export default function Dashboard({
                 <div className={styles.tableSecondWrapper}>
                   <table className={styles.tableSecond}>
                     <tbody>
-                      {!!nameClasses.length &&
-                        nameClasses.map((classe) => (
+                      {!!nameClassesArr &&
+                        nameClassesArr.map((classe) => (
                           <tr key={classe.id}>
                             <td>{classe.nome}</td>
                           </tr>
@@ -367,6 +381,10 @@ export default function Dashboard({
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+  if (!user) {
+    return { props: {} };
+  }
 
   const { data: studentsPlans, count: countStudents } = await supabase
     .from("alunos")
