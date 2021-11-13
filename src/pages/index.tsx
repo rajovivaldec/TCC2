@@ -24,12 +24,7 @@ export default function Dashboard({
   const { user } = useAuth();
   const [showResetPass, setShowResetPass] = useState(false);
   const [messageRedirect, setMessageRedirect] = useState(false);
-  const {
-    dataDoughnut,
-    optionsDoughnut,
-    dataBar,
-    optionsBar,
-  } = useChart();
+  const { dataDoughnut, optionsDoughnut, dataBar, optionsBar } = useChart();
   const [initialRange, setInitialRange] = useState(0);
   const [finalRange, setFinalRange] = useState(6);
   const [lastStudents, setLastStudents] = useState([]);
@@ -112,14 +107,6 @@ export default function Dashboard({
     }
     fetchStudents();
   }, [user, initialRange, finalRange]);
-
-  if (
-    countStudents === undefined ||
-    countClasses === undefined ||
-    countPlans === undefined
-  ) {
-    location.reload();
-  }
 
   if (!user) {
     return (

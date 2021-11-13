@@ -61,7 +61,6 @@ export default function MinhaConta() {
           .single();
 
         if (error) setError(error.message);
-        console.log(data);
         name.setValue(data.nome);
       }
     } else {
@@ -102,8 +101,6 @@ export default function MinhaConta() {
 
   return (
     <>
-      {error && toast.error(error)}
-
       <section className={styles.container}>
         <h1>Minha Conta</h1>
         <BgWhite>
