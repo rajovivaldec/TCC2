@@ -9,7 +9,7 @@ export const useChart = () => {
   const [studentsPlansData, setStudentsPlansData] = useState([]);
 
   useEffect(() => {
-    async function fetchGenres() {
+    async function fetchData() {
       if (user) {
         const { count: totalFemale } = await supabase
           .from("alunos")
@@ -51,7 +51,7 @@ export const useChart = () => {
         setStudentsPlansData(studentsPlansArray);
       }
     }
-    fetchGenres();
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
