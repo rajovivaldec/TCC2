@@ -108,16 +108,16 @@ export default function Dashboard({
     fetchStudents();
   }, [user, initialRange, finalRange]);
 
-  useEffect(() => {
-    if (
-      user &&
-      (countPlans === undefined ||
-        countStudents === undefined ||
-        countClasses === undefined)
-    ) {
-      location.reload();
-    }
-  }, [countPlans, countStudents, countClasses, user]);
+  // useEffect(() => {
+  //   if (
+  //     user &&
+  //     (countPlans === undefined ||
+  //       countStudents === undefined ||
+  //       countClasses === undefined)
+  //   ) {
+  //     location.reload();
+  //   }
+  // }, [countPlans, countStudents, countClasses, user]);
 
   if (!user) {
     return (
