@@ -1,17 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import { Line, Doughnut, Bar } from "react-chartjs-2";
+import { Doughnut, Bar } from "react-chartjs-2";
 import { supabase } from "../lib/initSupabase";
 import { useAuth } from "../contexts/AuthContext";
 import { ResetPassword } from "../components/ResetPassword";
 import { BgWhite } from "../components/BgWhite";
 import { useChart } from "../hooks/useChart";
 import { Button } from "../components/Button";
-import styles from "../styles/home.module.scss";
 import { toast } from "react-toastify";
+import styles from "../styles/home.module.scss";
 
 export default function Dashboard({
   countStudents,
@@ -32,7 +32,6 @@ export default function Dashboard({
   const [totalEstimatedRevenue, setTotalestimatedRevenue] = useState(0);
   const [studentPlansArr, setstudentPlansArr] = useState(studentsPlans || []);
   const [expenditureArr, setExpenditureArr] = useState(expenditure || []);
-  const [nameClassesArr, setNameClassesArr] = useState(nameClasses || []);
 
   function estimatedRevenue() {
     if (user) {
@@ -107,17 +106,6 @@ export default function Dashboard({
     }
     fetchStudents();
   }, [user, initialRange, finalRange]);
-
-  // useEffect(() => {
-  //   if (
-  //     user &&
-  //     (countPlans === undefined ||
-  //       countStudents === undefined ||
-  //       countClasses === undefined)
-  //   ) {
-  //     location.reload();
-  //   }
-  // }, [countPlans, countStudents, countClasses, user]);
 
   if (!user) {
     return (
@@ -359,8 +347,8 @@ export default function Dashboard({
                 <div className={styles.tableSecondWrapper}>
                   <table className={styles.tableSecond}>
                     <tbody>
-                      {!!nameClassesArr &&
-                        nameClassesArr.map((classe) => (
+                      {!!nameClasses &&
+                        nameClasses.map((classe) => (
                           <tr key={classe.id}>
                             <td>{classe.nome}</td>
                           </tr>

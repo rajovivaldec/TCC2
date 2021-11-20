@@ -42,9 +42,11 @@ export default function Login() {
       });
       if (signInError) setError(signInError.message);
 
-      if (data) {
-        setLoading(false);
-        Router.push("/");
+      if (data.user.aud === "authenticated") {
+        setTimeout(() => {
+          Router.push("/");
+          setLoading(false);
+        }, 300);
       }
     } else {
       toast.error("Necessário preencher os campos corretamente");
